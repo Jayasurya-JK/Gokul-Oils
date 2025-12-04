@@ -1,0 +1,76 @@
+import Link from 'next/link';
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+
+export default function Footer() {
+    return (
+        <footer className="bg-[#0a6847] text-white pt-16 pb-8">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    {/* Brand */}
+                    <div>
+                        <h2 className="text-2xl font-bold mb-6">Gokul Oils</h2>
+                        <p className="text-green-100 mb-6 leading-relaxed">
+                            Bringing the purity of tradition to your kitchen. 100% wood-pressed, chemical-free oils for a healthier life.
+                        </p>
+                        <div className="flex gap-4">
+                            <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+                                <Facebook className="w-5 h-5" />
+                            </a>
+                            <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+                                <Instagram className="w-5 h-5" />
+                            </a>
+                            <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+                                <Twitter className="w-5 h-5" />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div>
+                        <h3 className="text-lg font-bold mb-6">Quick Links</h3>
+                        <ul className="space-y-4 text-green-100">
+                            <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+                            <li><Link href="/shop" className="hover:text-white transition-colors">Shop Oils</Link></li>
+                            <li><Link href="/about" className="hover:text-white transition-colors">Our Story</Link></li>
+                            <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Products */}
+                    <div>
+                        <h3 className="text-lg font-bold mb-6">Our Products</h3>
+                        <ul className="space-y-4 text-green-100">
+                            <li><Link href="/shop/groundnut" className="hover:text-white transition-colors">Groundnut Oil</Link></li>
+                            <li><Link href="/shop/sesame" className="hover:text-white transition-colors">Sesame Oil</Link></li>
+                            <li><Link href="/shop/coconut" className="hover:text-white transition-colors">Coconut Oil</Link></li>
+                            <li><Link href="/shop/deepam" className="hover:text-white transition-colors">Deepam Oil</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Contact */}
+                    <div>
+                        <h3 className="text-lg font-bold mb-6">Contact Us</h3>
+                        <ul className="space-y-4 text-green-100">
+                            <li className="flex items-start gap-3">
+                                <MapPin className="w-5 h-5 shrink-0 mt-1" />
+                                <span>123, Green Valley Road,<br />Coimbatore, Tamil Nadu</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <Phone className="w-5 h-5 shrink-0" />
+                                <span>+91 98765 43210</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <Mail className="w-5 h-5 shrink-0" />
+                                <span>support@gokuloils.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="border-t border-white/10 pt-8 text-center text-green-200 text-sm">
+                    <p>&copy; {new Date().getFullYear()} Gokul Oils. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    );
+}
