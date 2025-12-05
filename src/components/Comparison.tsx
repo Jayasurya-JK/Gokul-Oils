@@ -29,8 +29,8 @@ export default function Comparison() {
     const [hasInteracted, setHasInteracted] = useState(false);
 
     // Auto-play animation ref
-    const requestRef = useRef<number>();
-    const startTimeRef = useRef<number>();
+    const requestRef = useRef<number | null>(null);
+    const startTimeRef = useRef<number | null>(null);
 
     // Handle mouse/touch move
     const handleMove = useCallback((clientX: number) => {
@@ -94,7 +94,7 @@ export default function Comparison() {
         }
 
         const animate = (time: number) => {
-            if (!startTimeRef.current) startTimeRef.current = time;
+            if (startTimeRef.current === null) startTimeRef.current = time;
             const elapsed = time - startTimeRef.current; // ms
 
             // Cycle defined as:
@@ -117,7 +117,7 @@ export default function Comparison() {
             // Change seed at the start of a new cycle (when slider is at 0)
             if (cycle > cycleRef.current) {
                 cycleRef.current = cycle;
-                setActiveSeedIndex((prev) => (prev + 1) % 3);
+                setActiveSeedIndex((prev) => (prev + 1) % seedData.length);
             }
 
             let newPos = 0;
