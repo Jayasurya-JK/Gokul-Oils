@@ -1,43 +1,64 @@
-import { CheckCircle } from 'lucide-react';
+import Image from 'next/image';
+
 
 const features = [
     {
-        title: '100% Wood-Pressed',
-        desc: 'Extracted using traditional wooden Ghani.',
+        icon: '/icons/tn_seed_transparent.png',
+        title: 'Premium Tamil Nadu Seeds',
+        desc: 'Handpicked directly from trusted local farmers for the best purity and taste.',
+        isImage: true,
+        scale: 'scale-125',
     },
     {
-        title: 'No Preservatives',
-        desc: 'Zero chemicals or additives used.',
+        icon: '/icons/Marachekku Machine Colored.png',
+        title: 'Traditional Wood-Pressed',
+        desc: 'Slow and cold process keeps nutrients, aroma, and natural antioxidants alive.',
+        isImage: true,
+        scale: 'scale-100',
     },
     {
-        title: 'No Refined Processing',
-        desc: 'Kept pure and natural, just like nature.',
+        icon: '/icons/shield colored.png',
+        title: 'Zero Chemicals',
+        desc: 'No bleaching, no deodorizing, no artificial filtering — just pure oil as nature made it.',
+        isImage: true,
+        scale: 'scale-125',
     },
     {
-        title: 'Nutrient Rich',
-        desc: 'Retains natural aroma and essential nutrients.',
+        icon: '/icons/The heart nature colored.png',
+        title: 'Good Fats for Health',
+        desc: 'Rich in Vitamin E & essential fatty acids that support heart and overall wellness.',
+        isImage: true,
+        scale: 'scale-125',
     },
 ];
 
 export default function WhyChoose() {
     return (
-        <section className="py-16 bg-[#f6f9f6]">
+        <section className="pt-12 pb-2 bg-[#fcfdfc]">
             <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Gokul Oils?</h2>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                        We bring you the goodness of tradition with modern hygiene standards.
-                    </p>
+                <div className="text-center mb-10">
+                    <h2 className="text-2xl md:text-4xl font-bold text-[#1a4d2e] font-serif tracking-wide">
+                        Why Choose Gokul Oils?
+                    </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12 max-w-7xl mx-auto">
                     {features.map((feature, index) => (
-                        <div key={index} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <CheckCircle className="w-6 h-6" />
+                        <div key={index} className="flex flex-col items-center text-center">
+                            <div className={`mb-6 relative w-28 h-28 md:w-40 md:h-40 flex items-center justify-center transform ${feature.scale}`}>
+                                <Image
+                                    src={feature.icon as string}
+                                    alt={feature.title}
+                                    fill
+                                    className="object-contain mix-blend-multiply"
+                                />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed">{feature.desc}</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-[#1a4d2e] mb-3 font-serif leading-tight">
+                                {feature.title}
+                            </h3>
+                            <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-[200px] md:max-w-[260px]">
+                                {feature.desc}
+                            </p>
                         </div>
                     ))}
                 </div>
