@@ -34,9 +34,9 @@ const features = [
 
 export default function WhyChoose() {
     return (
-        <section className="pt-12 pb-2 bg-[#fcfdfc]">
+        <section className="pt-8 pb-4 bg-[#fcfdfc]">
             <div className="container mx-auto px-4">
-                <div className="text-center mb-10">
+                <div className="text-center mb-6">
                     <h2 className="text-2xl md:text-4xl font-bold text-[#1a4d2e] font-serif tracking-wide">
                         Why Choose Gokul Oils?
                     </h2>

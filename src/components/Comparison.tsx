@@ -152,11 +152,11 @@ export default function Comparison() {
         };
     }, [hasInteracted]);
     return (
-        <section className="pt-0 pb-6 md:py-24 bg-white overflow-hidden">
+        <section className="pt-0 pb-6 md:py-12 bg-white overflow-hidden">
             <div className="container mx-auto px-4">
                 {/* Seed Icons Section */}
-                <div className="flex justify-center mb-8 md:mb-12 mt-12 md:mt-0">
-                    <div className="inline-flex justify-center items-center gap-4 md:gap-16 border border-gray-100 rounded-full px-6 py-2 md:px-14 md:py-4 bg-white shadow-sm">
+                <div className="flex justify-center mb-6 md:mb-8 mt-4 md:mt-0">
+                    <div className="inline-flex justify-center items-center gap-3 md:gap-10 border border-gray-100 rounded-full px-5 py-2 md:px-10 md:py-3 bg-white shadow-sm">
                         {seedData.map((item, index) => (
                             <div
                                 key={index}
@@ -168,7 +168,7 @@ export default function Comparison() {
                                     : 'scale-100 opacity-40 grayscale hover:opacity-70'
                                     }`}
                             >
-                                <div className="relative w-20 h-20 md:w-32 md:h-32">
+                                <div className="relative w-16 h-16 md:w-24 md:h-24">
                                     <Image
                                         src={item.src}
                                         alt={item.name}
@@ -230,7 +230,7 @@ export default function Comparison() {
 
                             <div
                                 ref={containerRef}
-                                className="relative w-[160px] h-[290px] md:w-[280px] md:h-[500px] cursor-ew-resize select-none group touch-none"
+                                className="relative w-[160px] h-[290px] md:w-[280px] md:h-[500px] cursor-ew-resize select-none group touch-pan-y"
                                 onClick={handleContainerClick}
                             >
                                 {/* Left Image (Gokul Oil - Base) */}
