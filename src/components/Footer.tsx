@@ -54,7 +54,7 @@ export default function Footer() {
                         <ul className="space-y-4 text-green-100">
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 shrink-0 mt-1" />
-                                <span>123, Green Valley Road,<br />Coimbatore, Tamil Nadu</span>
+                                <span>Cuddalore, Tamil Nadu</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 shrink-0" />
@@ -62,14 +62,19 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 shrink-0" />
-                                <span>support@gokuloils.com</span>
+                                <span>info@gokuloils.in</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="border-t border-white/10 pt-8 text-center text-green-200 text-sm">
-                    <p>&copy; {new Date().getFullYear()} Gokul Oils. All rights reserved.</p>
+                <div className="border-t border-white/10 pt-8 pb-20 md:pb-0 flex flex-col md:flex-row justify-between items-center gap-4 text-green-200 text-sm">
+                    <p className="order-2 md:order-1">&copy; {new Date().getFullYear()} Gokul Oils. All rights reserved.</p>
+                    <div className="flex flex-row gap-4 md:gap-6 items-center order-1 md:order-2">
+                        <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <span className="text-green-200/50">|</span>
+                        <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
+                    </div>
                 </div>
             </div>
         </footer>

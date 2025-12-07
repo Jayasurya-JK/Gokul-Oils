@@ -2,7 +2,7 @@
 
 import { WooProductImage } from "@/types/woocommerce";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 interface ProductImageGalleryProps {
@@ -13,6 +13,13 @@ interface ProductImageGalleryProps {
 
 export default function ProductImageGallery({ images, productName, isOnSale }: ProductImageGalleryProps) {
     const [selectedImage, setSelectedImage] = useState(images[0]);
+
+    // Update selected image when images prop changes (e.g. variation change)
+    useEffect(() => {
+        if (images && images.length > 0) {
+            setSelectedImage(images[0]);
+        }
+    }, [images]);
 
     if (!images || images.length === 0) {
         return (

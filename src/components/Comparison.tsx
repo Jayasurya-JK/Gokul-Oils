@@ -10,9 +10,9 @@ export default function Comparison() {
 
 
     const seedData = [
-        { name: 'Groundnut Oil', src: '/icons/Groundnut Seed.png', bottleSrc: '/icons/Gokul oils Bottle Transition.png', refinedBottleSrc: '/icons/refined_oil_bottle.png' },
-        { name: 'Sesame Oil', src: '/icons/Sesame Seed.png', bottleSrc: '/icons/Sesame Oil Gokul.png', refinedBottleSrc: '/icons/Refined Oil bottle - sesame.png' },
-        { name: 'Coconut Oil', src: '/icons/Coconut seed.png', bottleSrc: '/icons/Coconut oil Gokul.png', refinedBottleSrc: '/icons/Refined Oil bottle - Coconut.png' },
+        { name: 'Groundnut Oil', src: '/icons/Groundnut Seed.webp', bottleSrc: '/icons/Gokul oils Bottle Transition.webp', refinedBottleSrc: '/icons/refined_oil_bottle.webp' },
+        { name: 'Sesame Oil', src: '/icons/Sesame Seed.webp', bottleSrc: '/icons/Sesame Oil Gokul.webp', refinedBottleSrc: '/icons/Refined Oil bottle - sesame.webp' },
+        { name: 'Coconut Oil', src: '/icons/Coconut seed.webp', bottleSrc: '/icons/Coconut oil Gokul.webp', refinedBottleSrc: '/icons/Refined Oil bottle - Coconut.webp' },
     ];
 
     const handlePrevSeed = () => {
@@ -174,6 +174,7 @@ export default function Comparison() {
                                         alt={item.name}
                                         fill
                                         className="object-contain"
+                                        sizes="(max-width: 768px) 64px, 96px"
                                     />
                                 </div>
                             </div>
@@ -250,6 +251,7 @@ export default function Comparison() {
                                             className="object-contain rotate-12 scale-95 transition-all duration-500 ease-in-out"
                                             draggable={false}
                                             priority
+                                            sizes="(max-width: 768px) 160px, 280px"
                                         />
                                     </div>
                                 </div>
@@ -271,6 +273,7 @@ export default function Comparison() {
                                             className="object-contain rotate-12 scale-95 transition-all duration-500 ease-in-out"
                                             draggable={false}
                                             priority
+                                            sizes="(max-width: 768px) 160px, 280px"
                                         />
                                     </div>
                                 </div>

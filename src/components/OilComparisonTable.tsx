@@ -8,7 +8,7 @@ import { ArrowUpRight } from "lucide-react";
 const oils = [
     {
         name: "Gokul Groundnut Oil",
-        image: "/icons/Gokul oils Bottle Transition.png",
+        image: "/icons/Gokul oils Bottle Transition.webp",
         url: "/product/wood-pressed-groundnut-oil",
         uses: ["Deep Frying", "Sautéing", "Daily Cooking"],
         weather: "Any Weather",
@@ -21,7 +21,7 @@ const oils = [
     },
     {
         name: "Gokul Coconut Oil",
-        image: "/icons/Coconut oil Gokul.png",
+        image: "/icons/Coconut oil Gokul.webp",
         url: "/product/wood-pressed-coconut-oil",
         uses: ["Cooking", "Baking", "Skin & Hair Care"],
         weather: "All Seasons",
@@ -34,7 +34,7 @@ const oils = [
     },
     {
         name: "Gokul Sesame Oil",
-        image: "/icons/Sesame Oil Gokul.png",
+        image: "/icons/Sesame Oil Gokul.webp",
         url: "/product/wood-pressed-white-sesame-oil",
         uses: ["Indian Gravies", "Pickling", "Oil Pulling"],
         weather: "Cool Weather",

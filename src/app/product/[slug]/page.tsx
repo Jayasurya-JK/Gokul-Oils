@@ -34,26 +34,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
     return (
         <div className="bg-white min-h-screen py-8">
             <div className="container mx-auto px-4 max-w-7xl">
-                {/* Breadcrumb / Back Link */}
+
                 <div className="mb-6">
                     <Link href="/shop" className="text-gray-500 hover:text-[#1F4D3C] text-sm font-medium transition-colors">
                         ← Back to Shop
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
-                    {/* Left Column: Image Gallery (Sticky) */}
-                    <div className="lg:sticky lg:top-24 lg:self-start lg:h-fit z-10">
-                        <ProductImageGallery
-                            images={product.images}
-                            productName={product.name}
-                            isOnSale={Boolean(isOnSale)}
-                        />
-                    </div>
-
-                    {/* Right Column: Product Details */}
-                    <ProductInfo product={product} variations={variations} />
-                </div>
+                {/* Main Product Section including Gallery and Details */}
+                <ProductInfo product={product} variations={variations} />
 
                 {/* Uses & FAQ Section - Full Width Below Main Grid */}
                 {/* Changed container width to max-w-6xl for wider display on desktop */}

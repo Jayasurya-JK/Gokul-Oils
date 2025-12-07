@@ -24,7 +24,7 @@ export default function ProductSection({ products }: ProductSectionProps) {
                 <div className="flex overflow-x-auto pb-4 gap-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                     {products.length > 0 ? (
                         products.map((product, index) => (
-                            <div key={product.id} className="snap-center min-w-[240px] md:min-w-[260px]">
+                            <div key={`product-${product.id}-${index}`} className="snap-center min-w-[240px] md:min-w-[260px]">
                                 <WooProductCard product={product} priority={index < 2} />
                             </div>
                         ))

@@ -58,6 +58,11 @@ export default function WooProductCard({ product, priority = false }: ProductCar
             {/* Content */}
             <div className="p-4 flex flex-col flex-grow">
 
+                {/* Size Tag (Dynamic) */}
+                <div className="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider h-4">
+                    {product.attributes?.find(a => a.name.toLowerCase() === 'size' || a.name.toLowerCase() === 'volume')?.options[0] || ""}
+                </div>
+
                 <Link href={`/product/${product.slug}`} className="block">
                     <h3 className="text-lg font-bold text-gray-900 font-playfair mb-1 leading-tight line-clamp-2 hover:text-[#1F4D3C] transition-colors">
                         {product.name}

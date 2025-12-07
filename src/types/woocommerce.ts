@@ -22,6 +22,7 @@ export interface WooProductImage {
     alt: string;
 }
 
+
 export interface WooProduct {
     id: number;
     name: string;
@@ -111,6 +112,17 @@ export interface WooProduct {
         key: string;
         value: string;
     }[];
+}
+
+export interface WooVariationAttribute {
+    id: number;
+    name: string;
+    option: string;
+}
+
+export interface WooVariation extends Omit<WooProduct, 'attributes'> {
+    attributes: WooVariationAttribute[];
+    image?: WooProductImage;
 }
 
 // Order Types

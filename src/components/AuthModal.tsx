@@ -45,7 +45,7 @@ export default function AuthModal() {
                     {!user ? (
                         <>
                             <div className="text-center mb-8">
-                                <Image src="/google-logo.png" width={48} height={48} alt="Google" className="mx-auto mb-4 w-12 h-12" />
+                                <Image src="/icons/Google__G__logo.webp" width={48} height={48} alt="Google" className="mx-auto mb-4 w-12 h-12" />
                                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                                     Sign In with Google
                                 </h2>
