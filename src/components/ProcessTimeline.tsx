@@ -2,7 +2,7 @@
 
 import { Sun, Droplet, Package, Leaf, Filter } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, Variants } from 'framer-motion';
 import Image from 'next/image';
 
 // Placeholder structure - User will provide images later
@@ -112,7 +112,7 @@ function MobileStepItem({ step, index, total }: { step: any, index: number, tota
     const isInView = useInView(ref, { margin: "-50px 0px -50px 0px", once: true });
 
     // Determine gradient direction for the card border/shadow
-    const cardVariants = {
+    const cardVariants: Variants = {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
     };

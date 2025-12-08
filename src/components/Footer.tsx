@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
@@ -8,7 +9,26 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* Brand */}
                     <div>
-                        <h2 className="text-2xl font-bold mb-6">Gokul Oils</h2>
+                        <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
+                            {/* Icon: White circle wrapper cropping to the 'G' */}
+                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shrink-0 overflow-hidden relative shadow-md">
+                                <Image
+                                    src="/icons/Goful logo G.png"
+                                    alt="Gokul Oils"
+                                    fill
+                                    className="object-contain p-1"
+                                />
+                            </div>
+
+                            {/* HTML Text */}
+                            <div className="flex flex-col">
+                                <h2 className="text-xl md:text-2xl font-bold font-serif leading-tight">Gokul Oils</h2>
+                                <span className="text-[10px] md:text-xs text-green-200 uppercase tracking-wider font-medium group-hover:text-white transition-colors">
+                                    Wood-Pressed • 100% Natural
+                                </span>
+                            </div>
+                        </Link>
+
                         <p className="text-green-100 mb-6 leading-relaxed">
                             Bringing the purity of tradition to your kitchen. 100% wood-pressed, chemical-free oils for a healthier life.
                         </p>
@@ -55,7 +75,9 @@ export default function Footer() {
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 shrink-0 mt-1" />
                                 <span>
-                                    No:30, Ashok Nagar, Nellikuppam Main Road, Kondur, Cuddalore - 607006
+                                    No:30, Ashok Nagar, Nellikuppam Main Road,<br />
+                                    Opp to VKM Mini Mahal, Kondur,<br />
+                                    Cuddalore - 607006
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
@@ -64,7 +86,7 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 shrink-0" />
-                                <span>info@gokuloils.in</span>
+                                <span>sales.gokuloils@gmail.com</span>
                             </li>
                         </ul>
                     </div>

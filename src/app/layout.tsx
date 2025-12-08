@@ -26,6 +26,9 @@ const robotoSlab = Roboto_Slab({
 export const metadata: Metadata = {
   title: "Gokul Oils - Cold Pressed, Pure, Traditional",
   description: "Experience the authentic taste of tradition with Gokul Oils. 100% wood-pressed, chemical-free oils.",
+  icons: {
+    icon: '/icons/Goful logo G.png',
+  },
 };
 
 export default function RootLayout({
