@@ -10,6 +10,7 @@ import CartDrawer from "@/components/CartDrawer";
 import AddedToCartModal from "@/components/AddedToCartModal";
 import { AuthProvider } from "@/context/AuthContext";
 import AuthModal from "@/components/AuthModal";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,6 +50,7 @@ export default function RootLayout({
             <Footer />
             <MobileNav />
             <WhatsAppButton />
+            <SpeedInsights />
           </AuthProvider>
         </CartProvider>
       </body>

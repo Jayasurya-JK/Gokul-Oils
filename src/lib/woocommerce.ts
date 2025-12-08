@@ -1,6 +1,20 @@
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 import { WooProduct, WooOrder, WooOrderPayload, WooVariation } from "@/types/woocommerce";
 
+// Suppress specific deprecation warnings caused by the woocommerce-rest-api library which uses an older Node.js API
+// This prevents the 'DeprecationWarning: url.parse() behavior is not standardized...' error in the console
+const originalEmitWarning = process.emitWarning;
+// @ts-ignore - Monkey patching to suppress specific unnecessary warning
+process.emitWarning = (warning, ...args) => {
+    if (typeof warning === 'string' && warning.includes('url.parse()')) {
+        return;
+    }
+    if (typeof warning === 'object' && warning.message && warning.message.includes('url.parse()')) {
+        return;
+    }
+    return (originalEmitWarning as any)(warning, ...args);
+};
+
 if (!process.env.WOOCOMMERCE_SITE_URL || !process.env.WOOCOMMERCE_CONSUMER_KEY || !process.env.WOOCOMMERCE_CONSUMER_SECRET) {
     throw new Error("WooCommerce environment variables are missing");
 }
