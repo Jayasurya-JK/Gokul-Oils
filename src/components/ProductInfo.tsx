@@ -114,6 +114,14 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                     productName={product.name}
                     isOnSale={isOnSale}
                 />
+                {/* Preload Variation Images (Hidden) */}
+                <div aria-hidden="true" className="h-0 w-0 overflow-hidden absolute">
+                    {variations.map((v) => {
+                        const img = 'image' in v ? (v as any).image?.src : '';
+                        if (!img) return null;
+                        return <img key={v.id} src={img} alt="" />;
+                    })}
+                </div>
             </div>
 
             {/* Right Column: Details */}

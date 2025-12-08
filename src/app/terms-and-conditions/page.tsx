@@ -14,7 +14,7 @@ export default function TermsAndConditions() {
 
                 <h2 className="text-2xl font-bold text-[#1F4D3C] mt-8 mb-4">1. General</h2>
                 <p>
-                    Gokul Oils ("we", "us", "our") operates this website to sell traditional wood-pressed oils. We reserve the right to update or change these terms at any time without prior notice.
+                    Gokul Oils is a unit of <strong>Sri Gokul Enterprises</strong> ("we", "us", "our"). We operate this website to sell traditional wood-pressed oils. We reserve the right to update or change these terms at any time without prior notice.
                 </p>
 
                 <h2 className="text-2xl font-bold text-[#1F4D3C] mt-8 mb-4">2. Products and Pricing</h2>
@@ -58,7 +58,11 @@ export default function TermsAndConditions() {
 
                 <h2 className="text-2xl font-bold text-[#1F4D3C] mt-8 mb-4">8. Contact Info</h2>
                 <p>
-                    For any legal or support queries, please email us at <strong>info@gokuloils.in</strong>.
+                    For any legal or support queries, please email us at <strong>info@gokuloils.in</strong> or write to us at:
+                    <br />
+                    <strong>Sri Gokul Enterprises</strong>
+                    <br />
+                    No:30, Ashok Nagar, Nellikuppam Main Road, Kondur, Cuddalore - 607006.
                 </p>
             </div>
         </div>

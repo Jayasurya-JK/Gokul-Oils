@@ -54,11 +54,13 @@ export default function Footer() {
                         <ul className="space-y-4 text-green-100">
                             <li className="flex items-start gap-3">
                                 <MapPin className="w-5 h-5 shrink-0 mt-1" />
-                                <span>Cuddalore, Tamil Nadu</span>
+                                <span>
+                                    No:30, Ashok Nagar, Nellikuppam Main Road, Kondur, Cuddalore - 607006
+                                </span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="w-5 h-5 shrink-0" />
-                                <span>+91 98765 43210</span>
+                                <span>+91 94450 99191 / 63855 71021</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="w-5 h-5 shrink-0" />

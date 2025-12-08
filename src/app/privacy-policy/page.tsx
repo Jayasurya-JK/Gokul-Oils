@@ -53,7 +53,7 @@ export default function PrivacyPolicy() {
                 <p>
                     If you have any questions about this Privacy Policy, please contact us at:<br />
                     <strong>Email:</strong> info@gokuloils.in<br />
-                    <strong>Address:</strong> Cuddalore, Tamil Nadu, India.
+                    <strong>Address:</strong> Sri Gokul Enterprises, No:30, Ashok Nagar, Nellikuppam Main Road, Kondur, Cuddalore - 607006, Tamil Nadu.
                 </p>
             </div>
         </div>

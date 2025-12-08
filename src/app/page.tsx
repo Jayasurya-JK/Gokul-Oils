@@ -5,9 +5,11 @@ import Comparison from '@/components/Comparison';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import Testimonials from '@/components/Testimonials';
 import Certifications from '@/components/Certifications';
+import About from '@/components/About';
+import ContactSection from '@/components/ContactSection';
 import { getProducts, enrichProductWithSpecificOption } from '@/lib/woocommerce';
 
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 25200; // Revalidate every 7 hours
 
 export default async function Home() {
   const products = await getProducts().catch(err => {
@@ -53,7 +55,9 @@ export default async function Home() {
       <WhyChoose />
       <Comparison />
       <ProcessTimeline />
+      {/* <About /> Removed as per request */}
       <Testimonials />
+      {/* <ContactSection /> Removed as per request */}
       <Certifications />
     </div>
   );

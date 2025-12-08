@@ -9,7 +9,7 @@ import ProductFAQ from "@/components/ProductFAQ";
 import OilComparisonTable from "@/components/OilComparisonTable";
 import ProductInfo from "@/components/ProductInfo";
 
-export const revalidate = 3600;
+export const revalidate = 25200;
 
 interface ProductPageProps {
     params: Promise<{

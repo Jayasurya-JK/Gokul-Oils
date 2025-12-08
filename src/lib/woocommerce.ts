@@ -29,10 +29,39 @@ export const wooCommerceApi = new WooCommerceRestApi({
     }
 });
 
-export async function getProducts(): Promise<WooProduct[]> {
-    try {
+// Cache wrapper for Product Fetching
+import { unstable_cache } from 'next/cache';
+
+const getProductsCached = unstable_cache(
+    async () => {
         const response = await wooCommerceApi.get("products");
         return response.data;
+    },
+    ['all-products'],
+    { revalidate: 25200 }
+);
+
+const getProductBySlugCached = unstable_cache(
+    async (slug: string) => {
+        const response = await wooCommerceApi.get("products", { slug });
+        return response.data;
+    },
+    ['product-by-slug'],
+    { revalidate: 25200 }
+);
+
+const getProductVariationsCached = unstable_cache(
+    async (productId: number) => {
+        const response = await wooCommerceApi.get(`products/${productId}/variations`);
+        return response.data;
+    },
+    ['product-variations'],
+    { revalidate: 25200 }
+);
+
+export async function getProducts(): Promise<WooProduct[]> {
+    try {
+        return await getProductsCached();
     } catch (error) {
         throw new Error(`WooCommerce API Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -40,10 +69,8 @@ export async function getProducts(): Promise<WooProduct[]> {
 
 export async function getProductBySlug(slug: string): Promise<WooProduct | null> {
     try {
-        const response = await wooCommerceApi.get("products", {
-            slug: slug,
-        });
-        return response.data[0] || null;
+        const data = await getProductBySlugCached(slug);
+        return data[0] || null;
     } catch (error) {
         console.error(`Error fetching product with slug ${slug}:`, error);
         return null;
@@ -62,8 +89,7 @@ export async function createOrder(data: WooOrderPayload): Promise<WooOrder> {
 
 export async function getProductVariations(productId: number): Promise<WooVariation[]> {
     try {
-        const response = await wooCommerceApi.get(`products/${productId}/variations`);
-        return response.data;
+        return await getProductVariationsCached(productId);
     } catch (error) {
         console.error(`Error fetching variations for product ${productId}:`, error);
         return [];

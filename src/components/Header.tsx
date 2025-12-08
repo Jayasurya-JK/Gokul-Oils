@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Menu, Search, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -26,8 +27,14 @@ export default function Header() {
 
                     {/* Center: Logo */}
                     <div className="flex-1 flex justify-center lg:justify-start lg:flex-none">
-                        <Link href="/" className="text-2xl font-bold text-primary tracking-tight">
-                            Gokul Oils
+                        <Link href="/" className="block relative w-48 h-14 md:w-56 md:h-16">
+                            <Image
+                                src="/logo.webp"
+                                alt="Gokul Oils"
+                                fill
+                                className="object-contain object-center lg:object-left"
+                                unoptimized={true}
+                            />
                         </Link>
                     </div>
 
@@ -83,7 +90,15 @@ export default function Header() {
                     {/* Drawer */}
                     <div className="absolute top-0 left-0 bottom-0 w-[80%] max-w-[300px] bg-white shadow-2xl p-6 animate-in slide-in-from-left duration-300">
                         <div className="flex items-center justify-between mb-8">
-                            <span className="text-2xl font-bold text-primary">Gokul Oils</span>
+                            <div className="relative w-36 h-10">
+                                <Image
+                                    src="/logo.webp"
+                                    alt="Gokul Oils"
+                                    fill
+                                    className="object-contain object-left"
+                                    unoptimized={true}
+                                />
+                            </div>
                             <button
                                 onClick={() => setIsMenuOpen(false)}
                                 className="p-2 hover:bg-gray-100 rounded-full text-gray-500"
