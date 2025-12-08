@@ -16,7 +16,7 @@ export default function Footer() {
                                     src="/icons/Goful logo G.png"
                                     alt="Gokul Oils"
                                     fill
-                                    className="object-contain p-1"
+                                    className="object-contain"
                                 />
                             </div>
 
