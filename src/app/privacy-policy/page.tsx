@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
                 <p>We collect information to provide better services to all our users. This includes:</p>
                 <ul className="list-disc pl-6 mb-4 space-y-2">
                     <li><strong>Personal Information:</strong> Name, email address, phone number, and shipping address when you register or place an order.</li>
-                    <li><strong>Payment Information:</strong> We do not store your credit/debit card details. All payments are processed securely through our trusted payment gateway partners (e.g., Razorpay/PhonePe).</li>
+                    <li><strong>Payment Information:</strong> We do not store your credit/debit card details. All payments are processed securely through our trusted payment gateway partners (e.g., Stripe, Razorpay/PhonePe).</li>
                     <li><strong>Account Data:</strong> Login credentials if you create an account with us or sign in using Google.</li>
                 </ul>
 
@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
                 <h2 className="text-2xl font-bold text-[#1F4D3C] mt-8 mb-4">7. Contact Us</h2>
                 <p>
                     If you have any questions about this Privacy Policy, please contact us at:<br />
-                    <strong>Email:</strong> info@gokuloils.in<br />
+                    <strong>Email:</strong> sales.gokuloils@gmail.com<br />
                     <strong>Address:</strong> Sri Gokul Enterprises, No:30, Ashok Nagar, Nellikuppam Main Road, Kondur, Cuddalore - 607006, Tamil Nadu.
                 </p>
             </div>
