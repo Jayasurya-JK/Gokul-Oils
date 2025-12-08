@@ -16,7 +16,7 @@ export default function Footer() {
                                     src="/icons/Goful logo G.png"
                                     alt="Gokul Oils"
                                     fill
-                                    className="object-contain"
+                                    className="object-cover scale-[1.35]"
                                 />
                             </div>
 
@@ -61,10 +61,9 @@ export default function Footer() {
                     <div>
                         <h3 className="text-lg font-bold mb-6">Our Products</h3>
                         <ul className="space-y-4 text-green-100">
-                            <li><Link href="/shop/groundnut" className="hover:text-white transition-colors">Groundnut Oil</Link></li>
-                            <li><Link href="/shop/sesame" className="hover:text-white transition-colors">Sesame Oil</Link></li>
-                            <li><Link href="/shop/coconut" className="hover:text-white transition-colors">Coconut Oil</Link></li>
-                            <li><Link href="/shop/deepam" className="hover:text-white transition-colors">Deepam Oil</Link></li>
+                            <li><Link href="/product/wood-pressed-groundnut-oil" className="hover:text-white transition-colors">Groundnut Oil</Link></li>
+                            <li><Link href="/product/sesame-oil" className="hover:text-white transition-colors">Sesame Oil</Link></li>
+                            <li><Link href="/product/wood-pressed-coconut-oil" className="hover:text-white transition-colors">Coconut Oil</Link></li>
                         </ul>
                     </div>
 
