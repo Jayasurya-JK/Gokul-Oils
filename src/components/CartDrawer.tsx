@@ -6,6 +6,8 @@ import { X, Minus, Plus, ChevronLeft, Heart, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
+import CartProgressBar from './CartProgressBar';
+import CartUpsell from './CartUpsell';
 
 export default function CartDrawer() {
     const { cart, removeFromCart, updateQuantity, cartTotal, cartCount, isCartOpen, setIsCartOpen } = useCart();
@@ -50,9 +52,14 @@ export default function CartDrawer() {
                 </div>
 
                 {/* 2. Trust Banner */}
-                <div className="bg-[#1F4D3C] text-white py-2 px-4 text-center font-medium text-sm flex items-center justify-center gap-2">
+                <div className="bg-[#1F4D3C] text-white py-2 px-4 text-center font-medium text-sm flex items-center justify-center gap-2 shadow-sm relative z-20">
                     <span>Trusted by 10 Lakh+ Customers</span>
                 </div>
+
+                {/* Premium Milestone Progress Bar */}
+                {cart.length > 0 && (
+                    <CartProgressBar cartTotal={cartTotal} />
+                )}
 
                 {/* Scrollable Content */}
                 <div className="flex-1 overflow-y-auto bg-gray-50 pb-24">
@@ -91,51 +98,51 @@ export default function CartDrawer() {
                                         : 0;
 
                                     return (
-                                        <div key={item.id} className="flex gap-4 pb-6 border-b border-gray-100 last:border-0 last:pb-0">
+                                        <div key={item.id} className="flex gap-3 pb-5 border-b border-gray-100 last:border-0 last:pb-0">
                                             {/* Image */}
-                                            <div className="relative w-24 h-32 bg-gray-50 rounded-lg overflow-hidden shrink-0">
+                                            <div className="relative w-20 h-24 bg-gray-50 rounded-lg overflow-hidden shrink-0">
                                                 <Image
                                                     src={item.image}
                                                     alt={item.name}
                                                     fill
-                                                    className="object-contain p-2"
+                                                    className="object-contain p-0.5 mix-blend-multiply"
                                                     unoptimized={true}
                                                 />
                                             </div>
 
                                             {/* Info */}
                                             <div className="flex-1 flex flex-col">
-                                                <h4 className="text-gray-900 font-bold mb-1 leading-tight">{item.name}</h4>
+                                                <h4 className="text-sm font-bold text-gray-900 mb-1 leading-tight line-clamp-2">{item.name}</h4>
 
                                                 {/* Badge */}
-                                                <div className="mb-2">
-                                                    <span className="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded">Top Choice</span>
+                                                <div className="mb-1.5">
+                                                    <span className="bg-blue-50 text-blue-700 text-[9px] font-bold px-1.5 py-0.5 rounded-sm">Top Choice</span>
                                                 </div>
 
                                                 {/* Pricing */}
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <span className="text-lg font-bold text-gray-900">₹{item.price.toLocaleString()}</span>
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <span className="text-base font-bold text-gray-900">₹{item.price.toLocaleString()}</span>
                                                     {item.originalPrice && item.originalPrice > item.price && (
                                                         <>
-                                                            <span className="text-sm text-gray-400 line-through">₹{item.originalPrice.toLocaleString()}</span>
-                                                            <span className="text-sm text-gray-500 font-medium">({discount}% off)</span>
+                                                            <span className="text-xs text-gray-400 line-through">₹{item.originalPrice.toLocaleString()}</span>
+                                                            <span className="text-xs text-[#1F4D3C] font-bold">({discount}% off)</span>
                                                         </>
                                                     )}
                                                 </div>
 
                                                 {/* Quantity Row */}
                                                 <div className="flex items-center justify-between mt-auto">
-                                                    <div className="flex items-center border border-gray-300 rounded-full h-8 w-28 bg-white">
+                                                    <div className="flex items-center border border-gray-200 rounded-full h-7 w-24 bg-white">
                                                         <button
                                                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                            className="w-8 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 rounded-l-full"
+                                                            className="w-7 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 rounded-l-full"
                                                         >
                                                             <Minus className="w-3 h-3" />
                                                         </button>
-                                                        <span className="flex-1 text-center text-sm font-bold text-gray-900">{item.quantity}</span>
+                                                        <span className="flex-1 text-center text-xs font-bold text-gray-900">{item.quantity}</span>
                                                         <button
                                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                            className="w-8 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 rounded-r-full"
+                                                            className="w-7 h-full flex items-center justify-center hover:bg-gray-50 text-gray-500 rounded-r-full"
                                                         >
                                                             <Plus className="w-3 h-3" />
                                                         </button>
@@ -147,6 +154,8 @@ export default function CartDrawer() {
                                 })}
                             </div>
 
+                            <CartUpsell />
+
                             {/* Add More Items */}
                             <button
                                 onClick={() => setIsCartOpen(false)}
@@ -157,6 +166,8 @@ export default function CartDrawer() {
 
                         </div>
                     )}
+
+
                 </div>
 
                 {/* 3. Bottom Sticky Bar */}
