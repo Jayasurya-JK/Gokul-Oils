@@ -11,11 +11,16 @@ export default function AuthModal() {
 
     // Test helper for Google Login simulation
     const [testEmail, setTestEmail] = useState('');
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
+    // Import dynamically to avoid SSR issues if needed, but standard import works for client components
+    const { Turnstile } = require('@marsidev/react-turnstile');
 
     if (!isAuthModalOpen) return null;
 
 
     const handleGoogleLogin = async () => {
+        if (!turnstileToken) return;
         setLoading(true);
         // This will redirect to Google
         await loginWithGoogle();
@@ -44,7 +49,7 @@ export default function AuthModal() {
                 <div className="p-6 sm:p-8">
                     {!user ? (
                         <>
-                            <div className="text-center mb-8">
+                            <div className="text-center mb-6">
                                 <Image src="/icons/Google__G__logo.webp" width={48} height={48} alt="Google" className="mx-auto mb-4 w-12 h-12" />
                                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                                     Sign In with Google
@@ -55,14 +60,28 @@ export default function AuthModal() {
                             </div>
 
                             <div className="space-y-4">
+                                {/* Cloudflare Turnstile Widget */}
+                                <div className="flex justify-center mb-4 min-h-[65px]">
+                                    <Turnstile 
+                                        siteKey="0x4AAAAAACFi2eoPbMSmzSNB"
+                                        onSuccess={(token: string) => setTurnstileToken(token)}
+                                        onError={() => setTurnstileToken(null)}
+                                        onExpire={() => setTurnstileToken(null)}
+                                    />
+                                </div>
+
                                 <button
                                     onClick={handleGoogleLogin}
-                                    disabled={loading}
-                                    className="w-full bg-white text-gray-700 font-semibold py-3.5 rounded-xl border border-gray-300 hover:bg-gray-50 active:scale-[0.98] transition-all flex justify-center items-center gap-3 shadow-sm"
+                                    disabled={loading || !turnstileToken}
+                                    className={`w-full font-semibold py-3.5 rounded-xl border transition-all flex justify-center items-center gap-3 shadow-sm
+                                        ${!turnstileToken 
+                                            ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' 
+                                            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 active:scale-[0.98]'
+                                        }`}
                                 >
                                     {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                                         <>
-                                            <svg className="w-5 h-5" viewBox="0 0 24 24">
+                                            <svg className={`w-5 h-5 ${!turnstileToken ? 'opacity-50' : ''}`} viewBox="0 0 24 24">
                                                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                                                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
                                                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
