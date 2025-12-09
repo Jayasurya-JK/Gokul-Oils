@@ -60,22 +60,12 @@ export default function AuthModal() {
                             </div>
 
                             <div className="space-y-4">
-                                {/* Cloudflare Turnstile Widget */}
-                                <div className="flex justify-center mb-4 min-h-[65px]">
-                                    <Turnstile 
-                                        siteKey="0x4AAAAAACFi2eoPbMSmzSNB"
-                                        onSuccess={(token: string) => setTurnstileToken(token)}
-                                        onError={() => setTurnstileToken(null)}
-                                        onExpire={() => setTurnstileToken(null)}
-                                    />
-                                </div>
-
                                 <button
                                     onClick={handleGoogleLogin}
                                     disabled={loading || !turnstileToken}
                                     className={`w-full font-semibold py-3.5 rounded-xl border transition-all flex justify-center items-center gap-3 shadow-sm
-                                        ${!turnstileToken 
-                                            ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' 
+                                        ${!turnstileToken
+                                            ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
                                             : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 active:scale-[0.98]'
                                         }`}
                                 >
@@ -91,6 +81,18 @@ export default function AuthModal() {
                                         </>
                                     )}
                                 </button>
+
+                                {/* Cloudflare Turnstile Widget */}
+                                <div className="flex flex-col items-center mt-4 h-[60px]">
+                                    <div className="scale-[0.80] origin-top">
+                                        <Turnstile
+                                            siteKey="0x4AAAAAACFi2eoPbMSmzSNB"
+                                            onSuccess={(token: string) => setTurnstileToken(token)}
+                                            onError={() => setTurnstileToken(null)}
+                                            onExpire={() => setTurnstileToken(null)}
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
                             <p className="text-xs text-center text-gray-400 mt-6">
