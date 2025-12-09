@@ -152,10 +152,12 @@ export interface WooOrderPayload {
     payment_method: string;
     payment_method_title: string;
     set_paid: boolean;
+    transaction_id?: string;
     customer_id?: number;
     billing: WooAddress;
     shipping: WooAddress;
     line_items: WooLineItem[];
+    meta_data?: any[];
 }
 
 export interface WooOrder {

@@ -10,6 +10,14 @@ import { Loader2, User } from 'lucide-react';
 import { WooOrderPayload } from '@/types/woocommerce';
 import CartProgressBar from './CartProgressBar';
 
+import Script from 'next/script';
+
+declare global {
+    interface Window {
+        Razorpay: any;
+    }
+}
+
 export default function CheckoutForm() {
     const { cart, cartTotal, clearCart } = useCart();
     const { user, openAuthModal, isLoading: isAuthLoading } = useAuth();
@@ -37,7 +45,7 @@ export default function CheckoutForm() {
                 firstName: user.first_name || '',
                 lastName: user.last_name || '',
                 email: user.email || '',
-                phone: user.billing?.phone || user.username || '', // simplistic fallback
+                phone: user.billing?.phone || user.username || '',
                 address1: user.billing?.address_1 || '',
                 city: user.billing?.city || '',
                 state: user.billing?.state || '',
@@ -50,17 +58,93 @@ export default function CheckoutForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const calculateFinalTotal = () => {
+        let total = cartTotal;
+        const shipping = total > 999 ? 0 : 50;
+        const discount = total > 1500 ? 100 : 0;
+        return total + shipping - discount;
+    };
+
+    const handleRazorpayPayment = async () => {
         setLoading(true);
         setError('');
 
+        try {
+            const finalAmount = calculateFinalTotal();
+
+            // 1. Create Order on Server
+            const response = await fetch('/api/razorpay/order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: finalAmount }),
+            });
+
+            const order = await response.json();
+
+            if (!response.ok) {
+                // Handle HTML error responses (500s from Next.js) gracefully
+                if (typeof order === 'string') {
+                    throw new Error('Server error. Please contact support.');
+                }
+                throw new Error(order.error || 'Failed to create order');
+            }
+
+            if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) {
+                throw new Error("Payment gateway configuration missing (Client ID).");
+            }
+
+            // 2. Initialize Razorpay
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                amount: order.amount,
+                currency: order.currency,
+                name: "Gokul Oils",
+                description: "Wood Pressed Oils",
+                image: "/icons/Goful logo G.png",
+                order_id: order.id,
+                handler: async function (response: any) {
+                    await handlePlaceOrder(response.razorpay_payment_id, response.razorpay_order_id);
+                },
+                prefill: {
+                    name: `${formData.firstName} ${formData.lastName}`,
+                    email: formData.email,
+                    contact: formData.phone,
+                },
+                notes: {
+                    address: `${formData.address1}, ${formData.city}, ${formData.state} - ${formData.postcode}`
+                },
+                theme: {
+                    color: "#1F4D3C",
+                },
+                modal: {
+                    ondismiss: function () {
+                        setLoading(false);
+                    }
+                }
+            };
+
+            const rzp1 = new window.Razorpay(options);
+            rzp1.on('payment.failed', function (response: any) {
+                setError(response.error.description || "Payment Failed");
+                setLoading(false);
+            });
+            rzp1.open();
+
+        } catch (err: any) {
+            console.error("Payment Error:", err);
+            setError(err.message || 'Something went wrong with payment initialization');
+            setLoading(false);
+        }
+    };
+
+    const handlePlaceOrder = async (paymentId?: string, orderId?: string) => {
         const isCod = paymentMethod === 'cod';
 
         const orderData: WooOrderPayload = {
             payment_method: isCod ? "cod" : "razorpay",
             payment_method_title: isCod ? "Cash on Delivery" : "Online Payment",
-            set_paid: false, // For Razorpay, we'd set this true after verification, or let webhook handle it
+            set_paid: !isCod,
+            transaction_id: paymentId || '',
             customer_id: user ? user.id : 0,
             billing: {
                 first_name: formData.firstName,
@@ -86,14 +170,11 @@ export default function CheckoutForm() {
                 product_id: item.id,
                 quantity: item.quantity,
             })),
+            meta_data: paymentId ? [
+                { key: 'razorpay_payment_id', value: paymentId },
+                { key: 'razorpay_order_id', value: orderId || '' }
+            ] : []
         };
-
-        // TODO: For Razorpay, we should ideally:
-        // 1. Create Order (Pending) -> Get ID
-        // 2. Open Razorpay Flow
-        // 3. On Success -> Verify & Update Order
-
-        // For now, we allow creating the Pending order to test the flow.
 
         const result = await placeOrder(orderData);
 
@@ -101,9 +182,23 @@ export default function CheckoutForm() {
             setSuccess(true);
             clearCart();
         } else {
-            setError(result.error || "Something went wrong");
+            setError(result.error || "Order placement failed after payment. Please contact support.");
         }
         setLoading(false);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (paymentMethod === 'cod') {
+            // Logic for COD (currently disabled)
+            setLoading(true);
+            setError("COD is currently unavailable.");
+            setLoading(false);
+            return;
+        } else {
+            await handleRazorpayPayment();
+        }
     };
 
     if (success) {
@@ -435,6 +530,10 @@ export default function CheckoutForm() {
                     </p>
                 </div>
             </div>
+            <Script
+                id="razorpay-checkout-js"
+                src="https://checkout.razorpay.com/v1/checkout.js"
+            />
         </div>
     );
 }
