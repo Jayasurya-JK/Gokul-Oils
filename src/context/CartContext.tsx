@@ -72,10 +72,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             return [...prevCart, newItem];
         });
 
-        // Trigger Popup instead of Drawer
-        setLastAddedItem(newItem);
-        setIsAddedToCartModalOpen(true);
-        // setIsCartOpen(true); // Don't open drawer automatically anymore
+        // Trigger Drawer instead of Popup
+        // setLastAddedItem(newItem);
+        // setIsAddedToCartModalOpen(true);
+        setIsCartOpen(true);
     };
 
     const removeFromCart = (id: number) => {

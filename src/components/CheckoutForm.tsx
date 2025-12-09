@@ -25,6 +25,9 @@ export default function CheckoutForm() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card' | 'cod'>('upi');
+    const [couponCode, setCouponCode] = useState('');
+    const [couponDiscount, setCouponDiscount] = useState(0);
+    const [couponMessage, setCouponMessage] = useState('');
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -58,11 +61,21 @@ export default function CheckoutForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const applyCoupon = () => {
+        if (couponCode.toLowerCase() === 'teat01') {
+            setCouponDiscount(50);
+            setCouponMessage('Coupon applied successfully!');
+        } else {
+            setCouponDiscount(0);
+            setCouponMessage('Invalid coupon code');
+        }
+    };
+
     const calculateFinalTotal = () => {
         let total = cartTotal;
         const shipping = total > 999 ? 0 : 50;
         const discount = total > 1500 ? 100 : 0;
-        return total + shipping - discount;
+        return total + shipping - discount - couponDiscount;
     };
 
     const handleRazorpayPayment = async () => {
@@ -440,6 +453,40 @@ export default function CheckoutForm() {
                                     <span className="text-[#1F4D3C] font-bold">-₹100</span>
                                 </div>
                             )}
+
+                            {/* Coupon Code Section */}
+                            <div className="pt-2">
+                                {!couponDiscount ? (
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            placeholder="Coupon Code"
+                                            className="flex-1 bg-white border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:border-[#1F4D3C]"
+                                            value={couponCode}
+                                            onChange={(e) => setCouponCode(e.target.value)}
+                                        />
+                                        <button
+                                            onClick={applyCoupon}
+                                            className="bg-gray-900 text-white text-xs font-bold px-4 rounded-lg hover:bg-black transition-colors"
+                                        >
+                                            APPLY
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="flex justify-between items-center text-sm bg-green-50 px-3 py-2 rounded-lg border border-green-100">
+                                        <span className="text-green-700 font-medium flex items-center gap-1">
+                                            <span className="text-xs">🏷️</span> Coupon Applied
+                                        </span>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-green-700 font-bold">-₹{couponDiscount}</span>
+                                            <button onClick={() => { setCouponDiscount(0); setCouponCode(''); setCouponMessage(''); }} className="text-gray-400 hover:text-red-500">
+                                                ✕
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                                {couponMessage && !couponDiscount && <p className="text-xs text-red-500 mt-1 ml-1">{couponMessage}</p>}
+                            </div>
                         </div>
 
                         <div className="border-t border-gray-200 pt-3 flex justify-between items-center mt-3">
