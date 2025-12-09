@@ -103,7 +103,11 @@ export default function CheckoutForm() {
                 image: "/icons/Goful logo G.png",
                 order_id: order.id,
                 handler: async function (response: any) {
-                    await handlePlaceOrder(response.razorpay_payment_id, response.razorpay_order_id);
+                    await handlePlaceOrder(
+                        response.razorpay_payment_id,
+                        response.razorpay_order_id,
+                        response.razorpay_signature
+                    );
                 },
                 prefill: {
                     name: `${formData.firstName} ${formData.lastName}`,
@@ -115,6 +119,14 @@ export default function CheckoutForm() {
                 },
                 theme: {
                     color: "#1F4D3C",
+                },
+                config: {
+                    display: {
+                        hide: [
+                            { method: 'emi' },
+                            { method: 'paylater' }
+                        ]
+                    }
                 },
                 modal: {
                     ondismiss: function () {
@@ -137,7 +149,7 @@ export default function CheckoutForm() {
         }
     };
 
-    const handlePlaceOrder = async (paymentId?: string, orderId?: string) => {
+    const handlePlaceOrder = async (paymentId?: string, orderId?: string, signature?: string) => {
         const isCod = paymentMethod === 'cod';
 
         const orderData: WooOrderPayload = {
@@ -176,13 +188,37 @@ export default function CheckoutForm() {
             ] : []
         };
 
-        const result = await placeOrder(orderData);
+        if (isCod) {
+            const result = await placeOrder(orderData);
+            if (result.success) {
+                setSuccess(true);
+                clearCart();
+            } else {
+                setError(result.error || "Order placement failed.");
+            }
+            setLoading(false);
+            return;
+        }
 
-        if (result.success) {
-            setSuccess(true);
-            clearCart();
+        // Handle Razorpay Verification Flow
+        if (paymentId && orderId && signature) {
+            const { verifyAndPlaceOrder } = await import('@/actions/verify-order');
+
+            const result = await verifyAndPlaceOrder({
+                razorpay_payment_id: paymentId,
+                razorpay_order_id: orderId,
+                razorpay_signature: signature,
+                orderData
+            });
+
+            if (result.success) {
+                setSuccess(true);
+                clearCart();
+            } else {
+                setError(result.error || "Payment verification failed. Please contact support if money was deducted.");
+            }
         } else {
-            setError(result.error || "Order placement failed after payment. Please contact support.");
+            setError("Missing payment details.");
         }
         setLoading(false);
     };
