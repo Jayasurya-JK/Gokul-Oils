@@ -117,6 +117,7 @@ export async function enrichProductWithDefaultVariation(product: WooProduct): Pr
         if (defaultVariation) {
             // Create a copy of the product to avoid mutating the original reference if needed
             const enrichedProduct = { ...product };
+            enrichedProduct.default_variation_id = defaultVariation.id;
 
             // Update price fields with the default variation's price
             enrichedProduct.price = defaultVariation.price;
@@ -185,6 +186,7 @@ export async function enrichProductWithSpecificOption(product: WooProduct, optio
 
         if (targetVariation) {
             const enrichedProduct = { ...product };
+            enrichedProduct.default_variation_id = targetVariation.id;
 
             // Update price and sale details to match the variation
             enrichedProduct.price = targetVariation.price;

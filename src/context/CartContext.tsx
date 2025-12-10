@@ -11,6 +11,7 @@ export interface CartItem {
     image: string;
     slug: string;
     originalPrice?: number;
+    parentId?: number;
 }
 
 interface CartContextType {

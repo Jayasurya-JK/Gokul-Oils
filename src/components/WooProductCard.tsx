@@ -24,8 +24,13 @@ export default function WooProductCard({ product, priority = false }: ProductCar
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.preventDefault(); // Prevent navigation if card is a link
+
+        const cartId = product.default_variation_id || product.id;
+        const parentId = product.default_variation_id ? product.id : undefined;
+
         addToCart({
-            id: product.id,
+            id: cartId,
+            parentId: parentId,
             name: product.name,
             price: salePrice,
             quantity: 1,
@@ -97,8 +102,13 @@ export default function WooProductCard({ product, priority = false }: ProductCar
                     <button
                         onClick={(e) => {
                             e.preventDefault();
+
+                            const cartId = product.default_variation_id || product.id;
+                            const parentId = product.default_variation_id ? product.id : undefined;
+
                             addToCart({
-                                id: product.id,
+                                id: cartId,
+                                parentId: parentId,
                                 name: product.name,
                                 price: salePrice,
                                 quantity: 1,

@@ -78,6 +78,7 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
             image: imageUrl,
             slug: product.slug,
             originalPrice: isOnSale ? regularPrice : undefined,
+            parentId: activeData.id !== product.id ? product.id : undefined,
         });
     };
 

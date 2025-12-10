@@ -112,6 +112,7 @@ export interface WooProduct {
         key: string;
         value: string;
     }[];
+    default_variation_id?: number;
 }
 
 export interface WooVariationAttribute {

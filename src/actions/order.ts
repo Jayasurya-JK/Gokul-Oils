@@ -58,6 +58,21 @@ export async function initiateRazorpayOrder(orderData: WooOrderPayload) {
 
     } catch (error: any) {
         console.error("Initiate Razorpay Order Failed:", error);
-        return { success: false, error: error.message || "Failed to initiate payment" };
+
+        // Extract more specific error message if available (e.g., from WooCommerce/Axios)
+        let errorMessage = error.message || "Failed to initiate payment";
+
+        if (error.response && error.response.data) {
+            const apiError = error.response.data;
+            if (apiError.message) {
+                errorMessage = `API Error: ${apiError.message}`;
+            } else if (apiError.code) {
+                errorMessage = `API Error: ${apiError.code}`;
+            } else {
+                errorMessage = `API Error: ${JSON.stringify(apiError)}`;
+            }
+        }
+
+        return { success: false, error: errorMessage };
     }
 }

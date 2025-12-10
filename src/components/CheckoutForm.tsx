@@ -146,7 +146,8 @@ export default function CheckoutForm() {
                     country: "IN",
                 },
                 line_items: cart.map(item => ({
-                    product_id: item.id,
+                    product_id: item.parentId || item.id,
+                    variation_id: item.parentId ? item.id : undefined,
                     quantity: item.quantity,
                 })),
                 shipping_lines: [
@@ -272,7 +273,8 @@ export default function CheckoutForm() {
                     country: "IN",
                 },
                 line_items: cart.map(item => ({
-                    product_id: item.id,
+                    product_id: item.parentId || item.id,
+                    variation_id: item.parentId ? item.id : undefined,
                     quantity: item.quantity,
                 })),
                 // Add same fee logic for COD if needed
