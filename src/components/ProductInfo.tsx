@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Star, Share2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { WooProduct, WooProductImage, WooVariation } from '@/types/woocommerce';
 import { useCart } from '@/context/CartContext';
 import ProductImageGallery from './ProductImageGallery';
@@ -85,7 +86,7 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
     };
 
     // Determine Images for Gallery
-    let displayImages: WooProductImage[] = [...product.images];
+    let displayImages: WooProductImage[] = [...(product.images || [])];
 
     // Check if current variation has a specific image
     if (currentVariation && 'image' in currentVariation && (currentVariation as any).image) {
@@ -105,6 +106,20 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
         }
     }
 
+    const router = useRouter();
+
+    const handleBuyNow = (e: React.MouseEvent) => {
+        e.preventDefault();
+        handleAddToCart();
+        router.push('/checkout');
+    };
+
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
             {/* Left Column: Image Gallery (Sticky) */}
@@ -114,14 +129,6 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                     productName={product.name}
                     isOnSale={isOnSale}
                 />
-                {/* Preload Variation Images (Hidden) */}
-                <div aria-hidden="true" className="h-0 w-0 overflow-hidden absolute">
-                    {variations.map((v) => {
-                        const img = 'image' in v ? (v as any).image?.src : '';
-                        if (!img) return null;
-                        return <img key={v.id} src={img} alt="" />;
-                    })}
-                </div>
             </div>
 
             {/* Right Column: Details */}
@@ -174,10 +181,13 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                                 const discount = vOnSale ? Math.round(((vRegular - vPrice) / vRegular) * 100) : 0;
 
                                 return (
-                                    <button
+                                    <div
                                         key={v.id}
+                                        role="button"
+                                        tabIndex={0}
                                         onClick={() => setSelectedVarId(v.id)}
-                                        className={`rounded-lg overflow-hidden border w-full transition-all duration-200 ${isSelected
+                                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedVarId(v.id); }}
+                                        className={`rounded-lg overflow-hidden border w-full transition-all duration-200 cursor-pointer ${isSelected
                                             ? 'border-[#1F4D3C] shadow-md ring-1 ring-[#1F4D3C]'
                                             : 'border-gray-200 hover:border-gray-300'
                                             }`}
@@ -197,7 +207,7 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                                                 <span className="text-red-500 font-bold">{discount}% off</span>
                                             </div>
                                         )}
-                                    </button>
+                                    </div>
                                 );
                             })}
                         </div>
@@ -227,12 +237,12 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                         >
                             Add into Cart
                         </button>
-                        <Link
-                            href={`/checkout`}
+                        <button
+                            onClick={handleBuyNow}
                             className="flex-1 bg-[#F2C94C] hover:bg-[#e0b943] text-black h-10 md:h-12 rounded-md font-bold text-[10px] sm:text-sm tracking-wider uppercase transition-all shadow-sm flex items-center justify-center"
                         >
                             Buy Now
-                        </Link>
+                        </button>
                     </div>
                 </div>
 
@@ -264,12 +274,16 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                 {/* Product Short Description (Right Column) - Dynamic */}
                 <div className="mb-4 border-t border-gray-100 pt-8">
                     <h3 className="text-xl font-bold text-[#1F4D3C] font-playfair mb-4">Product Description</h3>
-                    <div
-                        className="prose prose-sm text-gray-600 max-w-none [&>p]:mb-4 leading-relaxed [&>ul]:list-disc [&>ul]:pl-5 [&>li]:mb-1"
-                        dangerouslySetInnerHTML={{ __html: product.short_description || product.description }}
-                    />
+                    {isMounted ? (
+                        <div
+                            className="prose prose-sm text-gray-600 max-w-none [&>p]:mb-4 leading-relaxed [&>ul]:list-disc [&>ul]:pl-5 [&>li]:mb-1"
+                            dangerouslySetInnerHTML={{ __html: product.short_description || product.description }}
+                        />
+                    ) : (
+                        <div className="h-24 bg-gray-50 rounded animate-pulse"></div>
+                    )}
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

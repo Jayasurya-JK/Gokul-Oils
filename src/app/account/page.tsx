@@ -8,13 +8,23 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function AccountPage() {
-    const { user, orders, logout, openAuthModal } = useAuth();
+    const { user, orders, logout, openAuthModal, isLoading } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        // If not logged in, you might want to redirect or open modal
-        // But for now we handle the "null user" state in render
+        // ...
     }, [user]);
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-[#1F4D3C] border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-gray-500 font-medium">Loading your account...</p>
+                </div>
+            </div>
+        );
+    }
 
     if (!user) {
         return (
@@ -45,38 +55,38 @@ export default function AccountPage() {
     const displayPhone = user.billing?.phone || lastOrder?.billing?.phone || 'No phone number';
 
     return (
-        <div className="min-h-screen bg-gray-50/50 pb-24 md:pb-12 pt-24">
+        <div className="min-h-screen bg-gray-50/50 pb-24 md:pb-12 pt-20">
             <div className="bg-white border-b border-gray-200">
-                <div className="container mx-auto px-4 py-8 md:py-12">
-                    <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="container mx-auto px-4 py-4">
+                    <div className="flex flex-col md:flex-row items-center gap-4">
                         {user.avatar_url ? (
                             <Image
                                 src={user.avatar_url}
-                                width={100}
-                                height={100}
+                                width={80}
+                                height={80}
                                 alt={user.first_name}
                                 className="rounded-full ring-4 ring-[#1a4d2e]/10"
                             />
                         ) : (
-                            <div className="w-24 h-24 bg-[#1a4d2e]/10 rounded-full flex items-center justify-center text-[#1a4d2e] font-bold text-3xl ring-4 ring-[#1a4d2e]/10">
+                            <div className="w-20 h-20 bg-[#1a4d2e]/10 rounded-full flex items-center justify-center text-[#1a4d2e] font-bold text-2xl ring-4 ring-[#1a4d2e]/10">
                                 {user.first_name ? user.first_name[0].toUpperCase() : 'U'}
                             </div>
                         )}
                         <div className="text-center md:text-left">
-                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
+                            <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-0.5">
                                 {user.first_name} {user.last_name}
                             </h1>
-                            <p className="text-gray-500">{user.email}</p>
+                            <p className="text-sm text-gray-500">{user.email}</p>
                         </div>
-                        <div className="md:ml-auto">
+                        <div className="md:ml-auto mt-2 md:mt-0">
                             <button
                                 onClick={() => {
                                     logout();
                                     router.push('/');
                                 }}
-                                className="flex items-center gap-2 text-red-600 font-medium px-4 py-2 hover:bg-red-50 rounded-lg transition-colors border border-red-100"
+                                className="flex items-center gap-2 text-red-600 font-medium px-4 py-1.5 hover:bg-red-50 rounded-lg transition-colors border border-red-100 text-sm"
                             >
-                                <LogOut className="w-4 h-4" />
+                                <LogOut className="w-3.5 h-3.5" />
                                 Sign Out
                             </button>
                         </div>
@@ -84,7 +94,7 @@ export default function AccountPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-4">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Left Column: Address & Details */}
                     <div className="lg:col-span-1 space-y-6">

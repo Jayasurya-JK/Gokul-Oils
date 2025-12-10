@@ -6,6 +6,7 @@ import { ShoppingCart, Zap, Star } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
     product: WooProduct;
@@ -14,6 +15,7 @@ interface ProductCardProps {
 
 export default function WooProductCard({ product, priority = false }: ProductCardProps) {
     const { addToCart } = useCart();
+    const router = useRouter();
 
     // Price Logic
     const regularPrice = parseInt(product.regular_price || product.price || "0");
@@ -92,13 +94,25 @@ export default function WooProductCard({ product, priority = false }: ProductCar
                         <ShoppingCart className="w-4 h-4" />
                         Add to cart
                     </button>
-                    <Link
-                        href={`/checkout`}
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            addToCart({
+                                id: product.id,
+                                name: product.name,
+                                price: salePrice,
+                                quantity: 1,
+                                image: product.images[0]?.src || '',
+                                slug: product.slug,
+                                originalPrice: regularPrice
+                            });
+                            router.push('/checkout');
+                        }}
                         className="w-full border border-[#1F4D3C] text-[#1F4D3C] hover:bg-[#1F4D3C]/5 py-2.5 rounded-full font-bold flex items-center justify-center gap-2 transition-colors text-sm"
                     >
                         <Zap className="w-4 h-4" />
                         Buy Now
-                    </Link>
+                    </button>
                 </div>
             </div>
         </div>

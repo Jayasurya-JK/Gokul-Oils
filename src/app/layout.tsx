@@ -41,6 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning={true}
         className={`${inter.variable} ${robotoSlab.variable} antialiased flex flex-col min-h-screen`}
       >
         <CartProvider>

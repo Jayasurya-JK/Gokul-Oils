@@ -42,7 +42,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
 
                 {/* Main Product Section including Gallery and Details */}
-                <ProductInfo product={product} variations={variations} />
+                <div>
+                    <ProductInfo product={product} variations={variations} />
+                </div>
 
                 {/* Uses & FAQ Section - Full Width Below Main Grid */}
                 {/* Changed container width to max-w-6xl for wider display on desktop */}

@@ -39,7 +39,7 @@ export default function WhyChoose() {
                 <div className="text-center mb-6">
                     <span className="text-green-600 font-bold uppercase tracking-widest text-sm mb-3 block">Our Promise</span>
                     <h2 className="text-3xl md:text-5xl font-bold text-[#1a4d2e] font-serif tracking-tight mb-4">
-                        The Gokul Difference
+                        The Gokul's Difference
                     </h2>
                     <div className="w-24 h-1 bg-[#1a4d2e] mx-auto rounded-full"></div>
                 </div>

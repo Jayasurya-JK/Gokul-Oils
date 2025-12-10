@@ -9,6 +9,33 @@ export default function Comparison() {
     // Track if user has manually changed seeds to pause auto-rotation
 
 
+    const [seedTouchStart, setSeedTouchStart] = useState(0);
+    const [seedTouchEnd, setSeedTouchEnd] = useState(0);
+
+    const handleSeedTouchStart = (e: React.TouchEvent) => {
+        setSeedTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleSeedTouchMove = (e: React.TouchEvent) => {
+        setSeedTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const handleSeedTouchEnd = () => {
+        if (!seedTouchStart || !seedTouchEnd) return;
+        const distance = seedTouchStart - seedTouchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) {
+            setActiveSeedIndex((prev) => (prev + 1) % seedData.length);
+        }
+        if (isRightSwipe) {
+            setActiveSeedIndex((prev) => (prev - 1 + seedData.length) % seedData.length);
+        }
+        setSeedTouchStart(0);
+        setSeedTouchEnd(0);
+    };
+
     const seedData = [
         { name: 'Groundnut Oil', src: '/icons/Groundnut Seed.webp', bottleSrc: '/icons/Gokul oils Bottle Transition.webp', refinedBottleSrc: '/icons/refined_oil_bottle.webp' },
         { name: 'Sesame Oil', src: '/icons/Sesame Seed.webp', bottleSrc: '/icons/Sesame Oil Gokul.webp', refinedBottleSrc: '/icons/Refined Oil bottle - sesame.webp' },
@@ -153,11 +180,15 @@ export default function Comparison() {
     }, [hasInteracted, seedData.length]); // Fixed dependencies
 
     return (
-        <section className="relative w-full py-12 md:py-20 bg-gradient-to-br from-green-50 to-white overflow-hidden">
+        <section className="relative w-full pt-12 md:pt-20 pb-12 md:pb-16 bg-gradient-to-br from-green-50 to-white overflow-hidden">
             <div className="container mx-auto px-4">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-[#1a4d2e] mb-10 md:mb-16 leading-tight">
-                    The Truth About Your Cooking Oil
-                </h2>
+                <div className="text-center mb-10 md:mb-16">
+                    <span className="text-green-600 font-bold uppercase tracking-widest text-sm mb-3 block">See the Difference</span>
+                    <h2 className="text-3xl md:text-5xl font-bold text-[#1F4D3C] font-serif tracking-tight mb-4">
+                        Real vs. Refined: The Healthy Choice
+                    </h2>
+                    <div className="w-24 h-1 bg-[#1F4D3C] mx-auto rounded-full"></div>
+                </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
                     {/* Left: Gokul Oil (New Left Card) */}
@@ -197,7 +228,12 @@ export default function Comparison() {
                         <div className="flex flex-col items-center gap-6">
 
                             {/* Seed Icons Section (MOVED INSIDE CENTER COLUMN FOR MOBILE/DESKTOP UNIFICATION) */}
-                            <div className="inline-flex justify-center items-center gap-3 md:gap-10 border border-gray-100 rounded-full px-6 py-3 md:px-8 md:py-3 bg-white shadow-sm ring-1 ring-gray-50 mb-6">
+                            <div
+                                className="inline-flex justify-center items-center gap-3 md:gap-10 border border-gray-100 rounded-full px-6 py-1 md:px-8 md:py-2 bg-white shadow-[0_10px_40px_-5px_rgba(0,0,0,0.1)] mb-6 touch-pan-y"
+                                onTouchStart={handleSeedTouchStart}
+                                onTouchMove={handleSeedTouchMove}
+                                onTouchEnd={handleSeedTouchEnd}
+                            >
                                 {seedData.map((item, index) => (
                                     <div
                                         key={index}
@@ -209,7 +245,7 @@ export default function Comparison() {
                                             : 'scale-95 opacity-50 grayscale hover:opacity-80'
                                             }`}
                                     >
-                                        <div className="relative w-16 h-16 md:w-22 md:h-22">
+                                        <div className="relative w-20 h-20 md:w-24 md:h-24">
                                             <Image
                                                 src={item.src}
                                                 alt={item.name}

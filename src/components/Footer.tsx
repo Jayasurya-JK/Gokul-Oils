@@ -14,7 +14,7 @@ export default function Footer() {
     };
 
     return (
-        <footer className="bg-[#0a6847] text-[#F4E6C3] pt-12 pb-8 overflow-hidden relative">
+        <footer className="bg-[#0a6847] text-[#F4E6C3] pt-12 pb-24 lg:pb-8 overflow-hidden relative">
 
 
             <div className="container mx-auto px-4 relative z-10">
@@ -41,7 +41,7 @@ export default function Footer() {
                         </Link>
 
                         <div className="space-y-4 text-sm text-[#F4E6C3]/80 mb-8 leading-relaxed max-w-xs">
-                            <p><strong>Corporate Office:</strong><br /> No:30, Ashok Nagar, Nellikuppam Main Road,<br /> Cuddalore - 607006</p>
+                            <p><strong>Store Address:</strong><br /> No:30, Ashok Nagar, Nellikuppam Main Road,<br /> Cuddalore - 607006</p>
                             <p><strong>Contact:</strong> +91 94450 99191</p>
                             <p><strong>Email:</strong> sales.gokuloils@gmail.com</p>
                         </div>
@@ -209,7 +209,7 @@ export default function Footer() {
                     {/* Address Centered */}
                     <div className="text-center w-full mb-8">
                         <div className="text-xs text-[#F4E6C3]/80 space-y-1">
-                            <p><strong>Corporate Office:</strong> No:30, Ashok Nagar, <br />Nellikuppam Main Road, Cuddalore</p>
+                            <p><strong>Store Address:</strong> No:30, Ashok Nagar, <br />Nellikuppam Main Road, Cuddalore</p>
                         </div>
                     </div>
 
@@ -219,10 +219,10 @@ export default function Footer() {
 
                 {/* Copyright & Credits - Visible on all screens */}
                 <div className="pt-8 text-center border-t border-[#F4E6C3]/20">
-                    <p className="text-xs text-[#F4E6C3]/60 mb-2">
+                    <p className="text-xs text-[#F4E6C3]/90 mb-2">
                         Copyright © {new Date().getFullYear()} Gokul Oils. All Rights Reserved.
                     </p>
-                    <p className="text-[10px] text-[#F4E6C3]/40 uppercase tracking-widest">
+                    <p className="text-[10px] text-[#F4E6C3]/80 uppercase tracking-widest">
                         Designed and Managed by Jay Webstudio
                     </p>
                 </div>

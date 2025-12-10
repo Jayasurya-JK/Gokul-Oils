@@ -41,11 +41,12 @@ const steps = [
 
 export default function ProcessTimeline() {
     return (
-        <section className="py-16 md:py-24 bg-[#fcfdfc] overflow-hidden">
+        <section className="py-12 md:py-16 bg-[#fcfdfc] overflow-hidden">
             <div className="container mx-auto px-4 max-w-6xl">
                 <div className="text-center mb-16 md:mb-24">
                     <span className="text-green-600 font-bold uppercase tracking-widest text-sm mb-3 block">Pure Methodology</span>
                     <h2 className="text-3xl md:text-5xl font-bold text-[#1F4D3C] font-serif">How Gokul Oils are Made</h2>
+                    <div className="w-24 h-1 bg-[#1F4D3C] mx-auto rounded-full mt-4"></div>
                 </div>
 
                 {/* Desktop View (Horizontal) */}

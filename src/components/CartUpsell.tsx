@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getUpsellProducts } from '@/actions/shop';
 import { useCart } from '@/context/CartContext';
 import { WooProduct } from '@/types/woocommerce';
 import { Loader2 } from 'lucide-react';
 
 export default function CartUpsell() {
-    const { cart, addToCart } = useCart();
+    const { cart, addToCart, setIsCartOpen } = useCart();
     const [products, setProducts] = useState<WooProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [addingId, setAddingId] = useState<number | null>(null);
@@ -66,7 +67,6 @@ export default function CartUpsell() {
                     const discount = regularPrice > price
                         ? Math.round(((regularPrice - price) / regularPrice) * 100)
                         : 0;
-
                     return (
                         <div
                             key={product.id}
@@ -80,7 +80,7 @@ export default function CartUpsell() {
                             )}
 
                             {/* Image */}
-                            <div className="relative w-full h-24 mb-2 bg-gray-50 rounded-md overflow-hidden">
+                            <Link href={`/product/${product.slug}`} onClick={() => setIsCartOpen(false)} className="block relative w-full h-24 mb-2 bg-gray-50 rounded-md overflow-hidden">
                                 {product.images[0] && (
                                     <Image
                                         src={product.images[0].src}
@@ -90,13 +90,15 @@ export default function CartUpsell() {
                                         unoptimized
                                     />
                                 )}
-                            </div>
+                            </Link>
 
                             {/* Content */}
                             <div>
-                                <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2 line-clamp-2 h-8" title={product.name}>
-                                    {product.name}
-                                </h4>
+                                <Link href={`/product/${product.slug}`} onClick={() => setIsCartOpen(false)}>
+                                    <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2 line-clamp-2 h-8 hover:text-[#1F4D3C] transition-colors" title={product.name}>
+                                        {product.name}
+                                    </h4>
+                                </Link>
 
 
                                 <div className="flex items-end justify-between">
@@ -123,7 +125,7 @@ export default function CartUpsell() {
                         </div>
                     );
                 })}
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

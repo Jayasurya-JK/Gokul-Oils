@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Home, Droplet, User, Package } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
@@ -8,6 +9,11 @@ import { useAuth } from '@/context/AuthContext';
 export default function MobileNav() {
     const { openAuthModal, user } = useAuth();
     const pathname = usePathname();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const isActive = (path: string) => pathname === path;
 
@@ -16,6 +22,8 @@ export default function MobileNav() {
         { name: 'Shop', href: '/shop', icon: Droplet },
         { name: 'Track', href: '/track-order', icon: Package },
     ];
+
+    if (pathname === '/checkout') return null;
 
     return (
         <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 lg:hidden z-50 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
@@ -39,7 +47,7 @@ export default function MobileNav() {
                     );
                 })}
 
-                {user ? (
+                {(isMounted && user) ? (
                     <Link
                         href="/account"
                         className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 ${isActive('/account') ? 'text-[#1a4d2e]' : 'text-gray-400 hover:text-gray-600'

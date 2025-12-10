@@ -37,8 +37,40 @@ export default function Hero() {
         return () => clearInterval(timer);
     }, []);
 
+    const [touchStart, setTouchStart] = useState(0);
+    const [touchEnd, setTouchEnd] = useState(0);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }
+
+        if (isRightSwipe) {
+            setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+        }
+    };
+
     return (
-        <section className="relative w-full h-[420px] md:h-[600px] overflow-hidden bg-gray-100">
+        <section
+            className="relative w-full h-[420px] md:h-[600px] overflow-hidden bg-gray-100 touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
             {slides.map((slide, index) => (
                 <div
                     key={slide.id}

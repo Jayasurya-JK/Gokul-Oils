@@ -53,7 +53,7 @@ export default function CartDrawer() {
 
                 {/* 2. Trust Banner */}
                 <div className="bg-[#1F4D3C] text-white py-2 px-4 text-center font-medium text-sm flex items-center justify-center gap-2 shadow-sm relative z-20">
-                    <span>Trusted by 10 Lakh+ Customers</span>
+                    <span>100% Pure Wood Pressed Oils</span>
                 </div>
 
                 {/* Premium Milestone Progress Bar */}
@@ -100,7 +100,7 @@ export default function CartDrawer() {
                                     return (
                                         <div key={item.id} className="flex gap-3 pb-5 border-b border-gray-100 last:border-0 last:pb-0">
                                             {/* Image */}
-                                            <div className="relative w-20 h-24 bg-gray-50 rounded-lg overflow-hidden shrink-0">
+                                            <Link href={`/product/${item.slug}`} className="relative w-20 h-24 bg-gray-50 rounded-lg overflow-hidden shrink-0 block" onClick={() => setIsCartOpen(false)}>
                                                 <Image
                                                     src={item.image}
                                                     alt={item.name}
@@ -108,11 +108,13 @@ export default function CartDrawer() {
                                                     className="object-contain p-0.5 mix-blend-multiply"
                                                     unoptimized={true}
                                                 />
-                                            </div>
+                                            </Link>
 
                                             {/* Info */}
                                             <div className="flex-1 flex flex-col">
-                                                <h4 className="text-sm font-bold text-gray-900 mb-1 leading-tight line-clamp-2">{item.name}</h4>
+                                                <Link href={`/product/${item.slug}`} className="block" onClick={() => setIsCartOpen(false)}>
+                                                    <h4 className="text-sm font-bold text-gray-900 mb-1 leading-tight line-clamp-2 hover:text-[#1F4D3C] transition-colors">{item.name}</h4>
+                                                </Link>
 
                                                 {/* Badge */}
                                                 <div className="mb-1.5">
@@ -157,12 +159,13 @@ export default function CartDrawer() {
                             <CartUpsell />
 
                             {/* Add More Items */}
-                            <button
+                            <Link
+                                href="/shop"
                                 onClick={() => setIsCartOpen(false)}
                                 className="w-full border border-[#1F4D3C] text-[#1F4D3C] rounded-full py-3 font-bold flex items-center justify-center gap-2 hover:bg-[#1F4D3C]/5 transition-colors"
                             >
                                 Add more items <ChevronLeft className="w-4 h-4 rotate-180" />
-                            </button>
+                            </Link>
 
                         </div>
                     )}

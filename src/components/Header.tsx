@@ -2,16 +2,23 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, Search, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import SearchModal from './SearchModal';
 
 export default function Header() {
     const { cartCount, setIsCartOpen } = useCart();
     const { openAuthModal, user } = useAuth();
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
         <>
@@ -33,6 +40,7 @@ export default function Header() {
                                 alt="Gokul Oils"
                                 fill
                                 className="object-contain object-center lg:object-left"
+                                priority={true}
                                 unoptimized={true}
                             />
                         </Link>
@@ -48,7 +56,10 @@ export default function Header() {
 
                     {/* Right: Icons */}
                     <div className="flex items-center gap-2 sm:gap-4">
-                        <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <button
+                            onClick={() => setIsSearchOpen(true)}
+                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                        >
                             <Search className="w-5 h-5 text-gray-600" />
                         </button>
                         <button
@@ -56,7 +67,7 @@ export default function Header() {
                             onClick={() => setIsCartOpen(true)}
                         >
                             <ShoppingCart className="w-5 h-5 text-gray-600" />
-                            {cartCount > 0 && (
+                            {isMounted && cartCount > 0 && (
                                 <span className="absolute -top-1 -right-1 bg-accent text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
                                     {cartCount}
                                 </span>
@@ -66,7 +77,7 @@ export default function Header() {
                             className="p-2 hover:bg-gray-100 rounded-full transition-colors hidden sm:block"
                             onClick={openAuthModal}
                         >
-                            {user ? (
+                            {isMounted && user ? (
                                 <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-xs ring-2 ring-primary/20">
                                     {user.first_name ? user.first_name[0] : 'U'}
                                 </div>
@@ -135,6 +146,8 @@ export default function Header() {
                     </div>
                 </div>
             )}
+
+            <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
         </>
     );
 }
