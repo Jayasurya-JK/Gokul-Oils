@@ -12,6 +12,7 @@ import { WooOrderPayload } from '@/types/woocommerce';
 import CartProgressBar from './CartProgressBar';
 
 import Script from 'next/script';
+import { INDIAN_STATES } from '@/constants/indian-states';
 
 declare global {
     interface Window {
@@ -435,6 +436,24 @@ export default function CheckoutForm() {
                                     value={formData.address1}
                                     onChange={handleChange}
                                 />
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">State</label>
+                                <select
+                                    name="state"
+                                    required
+                                    className="bg-white border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-[#1F4D3C] focus:border-[#1F4D3C] block w-full p-3.5 outline-none transition-all font-medium placeholder:text-gray-400 shadow-sm appearance-none"
+                                    value={formData.state}
+                                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                                >
+                                    <option value="">Select State</option>
+                                    {INDIAN_STATES.map((state) => (
+                                        <option key={state.code} value={state.code}>
+                                            {state.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">

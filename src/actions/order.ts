@@ -59,6 +59,19 @@ export async function initiateRazorpayOrder(orderData: WooOrderPayload) {
     } catch (error: any) {
         console.error("Initiate Razorpay Order Failed:", error);
 
+        // LOGGING TO FILE FOR DEBUGGING
+        try {
+            const fs = require('fs');
+            const path = require('path');
+            const logPath = path.join(process.cwd(), 'error_log.txt');
+            const timestamp = new Date().toISOString();
+            const errorDetails = error.response?.data ? JSON.stringify(error.response.data, null, 2) : error.message;
+            const logMessage = `\n[${timestamp}] Error: ${errorDetails}\nStack: ${error.stack}\nRequest Data: ${JSON.stringify(orderData, null, 2)}\n`;
+            fs.appendFileSync(logPath, logMessage);
+        } catch (logErr) {
+            console.error("Failed to write to error log:", logErr);
+        }
+
         // Extract more specific error message if available (e.g., from WooCommerce/Axios)
         let errorMessage = error.message || "Failed to initiate payment";
 
