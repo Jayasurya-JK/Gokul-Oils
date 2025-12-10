@@ -16,14 +16,14 @@ export async function POST(req: NextRequest) {
 
         if (!paymentId || !orderId || !signature || !wcOrderId) {
             console.error("Missing payment details in callback", { paymentId, orderId, signature, wcOrderId });
-            return NextResponse.redirect(new URL('/checkout?error=missing_details', req.url));
+            return NextResponse.redirect(new URL('/checkout?error=missing_details', req.url), { status: 303 });
         }
 
         // 1. Verify Signature
         const isValid = verifyRazorpaySignature(orderId, paymentId, signature);
         if (!isValid) {
             console.error("Invalid Signature in Callback");
-            return NextResponse.redirect(new URL('/checkout?error=invalid_signature', req.url));
+            return NextResponse.redirect(new URL('/checkout?error=invalid_signature', req.url), { status: 303 });
         }
 
         // 2. Fetch current order status to avoid double processing
@@ -45,10 +45,10 @@ export async function POST(req: NextRequest) {
         });
 
         // 4. Redirect to Success Page
-        return NextResponse.redirect(new URL('/checkout?success=true', req.url));
+        return NextResponse.redirect(new URL('/checkout?success=true', req.url), { status: 303 });
 
     } catch (error: any) {
         console.error("Payment Callback Error:", error);
-        return NextResponse.redirect(new URL('/checkout?error=server_error', req.url));
+        return NextResponse.redirect(new URL('/checkout?error=server_error', req.url), { status: 303 });
     }
 }
