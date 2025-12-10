@@ -168,6 +168,7 @@ export interface WooOrderPayload {
         name: string;
         total: string;
         tax_class?: string;
+        tax_status?: string;
     }>;
     meta_data?: any[];
 }
