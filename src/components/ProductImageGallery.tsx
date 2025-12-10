@@ -39,6 +39,7 @@ export default function ProductImageGallery({ images, productName, isOnSale }: P
         const isLeftSwipe = distance > 50;
         const isRightSwipe = distance < -50;
 
+        if (!selectedImage) return;
         const currentIndex = images.findIndex(img => img.id === selectedImage.id);
 
         if (isLeftSwipe && currentIndex < images.length - 1) {
