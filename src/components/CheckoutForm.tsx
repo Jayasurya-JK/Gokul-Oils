@@ -163,12 +163,12 @@ export default function CheckoutForm() {
                     ...(bulkDiscount > 0 ? [{
                         name: "Bulk Discount",
                         total: (-bulkDiscount).toString(),
-                        tax_class: "zero-rate"
+                        tax_status: "none"
                     }] : []),
                     ...(couponDiscount > 0 ? [{
                         name: "Coupon Discount",
                         total: (-couponDiscount).toString(),
-                        tax_class: "zero-rate"
+                        tax_status: "none"
                     }] : [])
                 ]
             };
