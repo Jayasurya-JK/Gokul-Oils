@@ -12,7 +12,7 @@ export default function ProductSection({ products }: ProductSectionProps) {
             <div className="container mx-auto px-4">
                 <div className="flex items-end justify-between mb-6">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Our Bestsellers</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-2">Our Bestsellers</h2>
                         <p className="text-gray-500">Pure, wood-pressed oils for your daily needs.</p>
                     </div>
                     <Link href="/shop" className="hidden md:block text-primary font-semibold hover:underline">

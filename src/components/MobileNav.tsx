@@ -26,7 +26,7 @@ export default function MobileNav() {
     if (pathname === '/checkout') return null;
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 lg:hidden z-50 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+        <div className="fixed bottom-0 left-0 right-0 bg-[#1a4d2e] backdrop-blur-md border-t border-[#235c39] lg:hidden z-50 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
             <div className="flex justify-around items-center h-[70px] px-2">
                 {navItems.map((item) => {
                     const active = isActive(item.href);
@@ -34,7 +34,7 @@ export default function MobileNav() {
                         <Link
                             key={item.name}
                             href={item.href}
-                            className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 ${active ? 'text-[#1a4d2e]' : 'text-gray-400 hover:text-gray-600'
+                            className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 ${active ? 'text-white' : 'text-green-200/60 hover:text-white'
                                 }`}
                         >
                             <item.icon
@@ -50,10 +50,10 @@ export default function MobileNav() {
                 {(isMounted && user) ? (
                     <Link
                         href="/account"
-                        className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 ${isActive('/account') ? 'text-[#1a4d2e]' : 'text-gray-400 hover:text-gray-600'
+                        className={`flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 ${isActive('/account') ? 'text-white' : 'text-green-200/60 hover:text-white'
                             }`}
                     >
-                        <div className="w-7 h-7 bg-[#1a4d2e]/10 rounded-full flex items-center justify-center text-[#1a4d2e] font-bold text-xs ring-2 ring-[#1a4d2e]/20 shadow-sm">
+                        <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-[#1a4d2e] font-bold text-xs ring-2 ring-white/20 shadow-sm">
                             {user.first_name ? user.first_name[0].toUpperCase() : 'U'}
                         </div>
                         <span className={`text-[11px] font-medium ${isActive('/account') ? 'font-bold' : ''}`}>
@@ -63,7 +63,7 @@ export default function MobileNav() {
                 ) : (
                     <button
                         onClick={openAuthModal}
-                        className="flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 text-gray-400 hover:text-gray-600"
+                        className="flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-300 text-green-200/60 hover:text-white"
                     >
                         <User className="w-6 h-6 stroke-2" />
                         <span className="text-[11px] font-medium">

@@ -6,39 +6,48 @@ import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 const testimonials = [
     {
         id: 1,
-        name: 'Minerva Thakur',
+        name: 'Manimaran R',
         role: 'Customer',
         rating: 5,
-        text: 'The aroma of Gokul’s Groundnut Oil takes me back to my grandmother’s kitchen. It’s absolutely pure, light on the stomach, and adds a wonderful flavor to our daily meals.',
+        text: 'Quality products, good taste can buy from this shop',
         initial: 'M',
         color: 'bg-orange-100 text-orange-600'
     },
     {
         id: 2,
-        name: 'Lakshmi Dev',
+        name: 'Ramesh P.R',
         role: 'Customer',
         rating: 5,
-        text: 'I use their Sesame Oil for traditional recipes and oil pulling. You can really taste the difference of authentic wood pressing. The quality is simply exceptional.',
-        initial: 'L',
+        text: 'Very natural and good for health',
+        initial: 'R',
         color: 'bg-blue-100 text-blue-600'
     },
     {
         id: 3,
-        name: 'Dr Shagun Walia',
-        role: 'Doctor',
+        name: 'Mohamed Iqbal Atham',
+        role: 'Local Guide',
         rating: 5,
-        text: 'Gokul’s Coconut Oil is the purest I’ve found. Unbleached and natural—perfect for my family’s health. I highly recommend switching to these wood pressed oils.',
-        initial: 'S',
+        text: 'Purely organic oil. Manufactured within the outlet. Highly recommended.',
+        initial: 'M',
         color: 'bg-green-100 text-green-600'
     },
     {
         id: 4,
-        name: 'Pankaj Tiwari',
-        role: 'Chef',
+        name: 'Soundar Rajan',
+        role: 'Customer',
         rating: 5,
-        text: 'As a chef, distinct flavors matter. The natural texture and freshness of Gokul Oils are unmatched. They are far superior to any refined oil available in the market.',
-        initial: 'P',
+        text: '1000 percentage authentic wood pressed oil',
+        initial: 'S',
         color: 'bg-purple-100 text-purple-600'
+    },
+    {
+        id: 5,
+        name: 'Srini Vasan',
+        role: 'Customer',
+        rating: 5,
+        text: 'We have been buying oil here for over a year now, and we feel very healthy. Very good products',
+        initial: 'S',
+        color: 'bg-yellow-100 text-yellow-600'
     },
 ];
 
@@ -74,6 +83,36 @@ export default function Testimonials() {
     const isBeginning = currentIndex === 0;
     const isEnd = currentIndex >= maxIndex;
 
+    // Touch Handling for Swipe
+    const [touchStart, setTouchStart] = useState(0);
+    const [touchEnd, setTouchEnd] = useState(0);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe && !isEnd) {
+            nextSlide();
+        }
+        if (isRightSwipe && !isBeginning) {
+            prevSlide();
+        }
+
+        setTouchStart(0);
+        setTouchEnd(0);
+    };
+
     return (
         <section className="py-12 md:py-16 bg-[#f8fcf8]"> {/* Light background for contrast with white cards */}
             <div className="container mx-auto px-4">
@@ -86,7 +125,12 @@ export default function Testimonials() {
                 </div>
 
                 <div className="relative max-w-7xl mx-auto">
-                    <div className="overflow-hidden px-1">
+                    <div
+                        className="overflow-hidden px-1 touch-pan-y"
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
                         <div
                             className="flex transition-transform duration-500 ease-out"
                             style={{ transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)` }}
@@ -97,10 +141,10 @@ export default function Testimonials() {
                                     className="flex-shrink-0 px-3"
                                     style={{ width: `${100 / itemsToShow}%` }}
                                 >
-                                    <div className="bg-white rounded-2xl p-6 md:p-8 h-full shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col justify-between min-h-[280px]">
+                                    <div className="bg-white rounded-2xl p-6 md:p-8 h-full shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col justify-between min-h-[200px]">
 
                                         {/* Quote Text */}
-                                        <div className="mb-6">
+                                        <div className="mb-4">
                                             <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                                                 "{testimonial.text}"
                                             </p>

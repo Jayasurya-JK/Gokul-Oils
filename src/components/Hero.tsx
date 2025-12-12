@@ -2,25 +2,33 @@
 
 import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const slides = [
     {
         id: 1,
-        image: 'bg-green-100', // Placeholder class
+        imageSrc: '/icons/Banner_Desktop_1.webp',
+        mobileImageSrc: '/icons/Website Banners - Mobile_1.webp',
+        bgClass: 'bg-green-100', // Fallback
         title: 'Cold-Pressed. Pure. Traditional.',
         subtitle: 'Experience the authentic taste of tradition.',
         cta: 'Shop Oils',
     },
     {
         id: 2,
-        image: 'bg-yellow-100',
+        imageSrc: '/icons/Banner_Desktop_2.webp',
+        mobileImageSrc: '/icons/Website Banners - Mobile_2.webp',
+        bgClass: 'bg-yellow-100',
         title: 'Better Taste, Better Health',
         subtitle: 'Rich in nutrients, just as nature intended.',
         cta: 'Discover More',
     },
     {
         id: 3,
-        image: 'bg-orange-100',
+        imageSrc: '/icons/Banner_Desktop_3.webp',
+        mobileImageSrc: '/icons/Website Banners - Mobile_3.webp',
+        bgClass: 'bg-orange-100',
         title: 'From Farm to Bottle',
         subtitle: 'Sourced directly from farmers, processed with care.',
         cta: 'View Process',
@@ -33,7 +41,7 @@ export default function Hero() {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 4000);
+        }, 5000);
         return () => clearInterval(timer);
     }, []);
 
@@ -77,24 +85,49 @@ export default function Hero() {
                     className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                         }`}
                 >
-                    {/* Background Image Placeholder */}
-                    <div className={`w-full h-full ${slide.image} flex items-center justify-center`}>
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-black/30 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <Link href="/shop" className="block w-full h-full cursor-pointer">
+                        {/* Background: Image or Color Placeholder */}
+                        <div className={`w-full h-full relative ${!slide.imageSrc ? slide.bgClass : ''} flex items-center justify-center`}>
 
-                        {/* Content */}
-                        <div className="relative z-10 text-center text-white px-4 max-w-3xl mx-auto mt-20">
-                            <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">
-                                {slide.title}
-                            </h1>
-                            <p className="text-lg md:text-xl mb-8 opacity-90 font-light">
-                                {slide.subtitle}
-                            </p>
-                            <button className="bg-accent hover:bg-green-600 text-white px-8 py-3 rounded-full font-semibold transition-all transform hover:scale-105 flex items-center gap-2 mx-auto">
-                                {slide.cta} <ArrowRight className="w-5 h-5" />
-                            </button>
+                            {/* Desktop Image */}
+                            {slide.imageSrc && (
+                                <div className={`absolute inset-0 w-full h-full ${slide.mobileImageSrc ? 'hidden md:block' : ''}`}>
+                                    <Image
+                                        src={slide.imageSrc}
+                                        alt={slide.title}
+                                        fill
+                                        className="object-cover"
+                                        priority={index === 0}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Mobile Image */}
+                            {slide.mobileImageSrc && (
+                                <div className="absolute inset-0 w-full h-full md:hidden">
+                                    <Image
+                                        src={slide.mobileImageSrc}
+                                        alt={slide.title}
+                                        fill
+                                        className={`object-cover ${slide.id === 3 ? 'object-bottom' : 'object-center'}`}
+                                        priority={index === 0}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Content Container */}
+                            <div className="absolute inset-0 flex flex-col md:flex-row items-center md:items-center justify-start pt-6 md:pt-0 px-6 md:px-16 container mx-auto">
+                                <div className="relative z-10 text-center md:text-left max-w-2xl w-full">
+                                    <h1 className="text-2xl md:text-6xl font-extrabold mb-2 md:mb-4 leading-tight text-green-950 drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">
+                                        {slide.title}
+                                    </h1>
+                                    <p className="text-sm md:text-xl opacity-100 font-bold text-green-900 drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">
+                                        {slide.subtitle}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             ))}
 
