@@ -37,9 +37,6 @@ export default function ContactSection() {
                             <a href="tel:+919445099191" className="block text-lg font-semibold text-[#1a4d2e] hover:underline">
                                 +91 94450 99191
                             </a>
-                            <a href="tel:+916385571021" className="block text-lg font-semibold text-[#1a4d2e] hover:underline">
-                                +91 63855 71021
-                            </a>
                         </div>
                     </div>
 
@@ -51,7 +48,7 @@ export default function ContactSection() {
                         <h3 className="text-xl font-bold text-[#1a4d2e] mb-4">Get in Touch</h3>
                         <p className="text-gray-600 mb-4">
                             Email us anytime at:<br />
-                            <a href="mailto:info@gokuloils.in" className="font-semibold text-[#1a4d2e] hover:underline">info@gokuloils.in</a>
+                            <a href="mailto:sales.gokuloils@gmail.com" className="font-semibold text-[#1a4d2e] hover:underline">sales.gokuloils@gmail.com</a>
                         </p>
                         <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-full">
                             <Clock className="w-4 h-4" />

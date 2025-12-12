@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Instagram, Mail, X, ChevronDown } from 'lucide-react';
+import { Facebook, Instagram, Mail, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Footer() {
@@ -89,10 +89,10 @@ export default function Footer() {
                         </Link>
 
                         <div className="flex gap-3">
-                            <a href="#" className="w-9 h-9 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:bg-white transition-colors">
+                            <a href="https://www.facebook.com/profile.php?id=61582621441070" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:bg-white transition-colors">
                                 <Facebook className="w-4 h-4" />
                             </a>
-                            <a href="#" className="w-9 h-9 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:bg-white transition-colors">
+                            <a href="https://www.instagram.com/gokuloils.in/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:bg-white transition-colors">
                                 <Instagram className="w-4 h-4" />
                             </a>
                             <a href="mailto:sales.gokuloils@gmail.com" className="w-9 h-9 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:bg-white transition-colors">
@@ -192,17 +192,14 @@ export default function Footer() {
 
                     {/* Social Icons Centered */}
                     <div className="flex justify-center gap-4 mb-8">
-                        <a href="#" className="w-12 h-12 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:scale-105 transition-transform">
+                        <a href="https://www.facebook.com/profile.php?id=61582621441070" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:scale-105 transition-transform">
                             <Facebook className="w-6 h-6" />
                         </a>
-                        <a href="#" className="w-12 h-12 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:scale-105 transition-transform">
+                        <a href="https://www.instagram.com/gokuloils.in/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:scale-105 transition-transform">
                             <Instagram className="w-6 h-6" />
                         </a>
                         <a href="mailto:sales.gokuloils@gmail.com" className="w-12 h-12 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:scale-105 transition-transform">
                             <Mail className="w-6 h-6" />
-                        </a>
-                        <a href="#" className="w-12 h-12 bg-[#F4E6C3] rounded-full flex items-center justify-center text-[#0a6847] hover:scale-105 transition-transform">
-                            <X className="w-6 h-6" />
                         </a>
                     </div>
 
