@@ -61,7 +61,9 @@ const getProductVariationsCached = unstable_cache(
 
 export async function getProducts(): Promise<WooProduct[]> {
     try {
-        return await getProductsCached();
+        const products = await getProductsCached();
+        // Force remove Dummy Product
+        return products.filter((p: WooProduct) => !p.name.toLowerCase().includes('dummy product'));
     } catch (error) {
         throw new Error(`WooCommerce API Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
