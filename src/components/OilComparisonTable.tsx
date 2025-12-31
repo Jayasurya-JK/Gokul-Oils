@@ -35,7 +35,7 @@ const oils = [
     {
         name: "Gokul Sesame Oil",
         image: "/icons/Sesame Oil Gokul.webp",
-        url: "/product/wood-pressed-white-sesame-oil",
+        url: "/product/sesame-oil",
         uses: ["Indian Gravies", "Pickling", "Oil Pulling"],
         weather: "Cool Weather",
         benefits: "Bone Strength & Body Cooling",

@@ -220,7 +220,7 @@ export default function Footer() {
                         Copyright © {new Date().getFullYear()} Gokul Oils. All Rights Reserved.
                     </p>
                     <p className="text-[10px] text-[#F4E6C3]/80 uppercase tracking-widest">
-                        Designed and Managed by Jay Webstudio
+                        Designed and Developed by Jay Webstudio
                     </p>
                 </div>
             </div>

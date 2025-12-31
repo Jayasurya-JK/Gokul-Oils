@@ -1,4 +1,4 @@
-import { getProducts } from "@/lib/woocommerce";
+import { getProducts, enrichProductWithSpecificOption } from "@/lib/woocommerce";
 import WooProductCard from "@/components/WooProductCard";
 import { WooProduct } from "@/types/woocommerce";
 
@@ -16,7 +16,13 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     const searchQuery = typeof resolvedParams.search === 'string' ? resolvedParams.search : '';
 
     try {
-        products = await getProducts();
+        const rawProducts = await getProducts();
+
+        // Enrich products to default to 1 Litre if available
+        products = await Promise.all(rawProducts.map(async (p) => {
+            const enriched = await enrichProductWithSpecificOption(p, '1 Litre');
+            return enriched || p;
+        }));
 
         // Filter by Search Query
         if (searchQuery) {
