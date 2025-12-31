@@ -11,6 +11,7 @@ import AddedToCartModal from "@/components/AddedToCartModal";
 import { AuthProvider } from "@/context/AuthContext";
 import AuthModal from "@/components/AuthModal";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,6 +60,19 @@ export default function RootLayout({
             <SpeedInsights />
           </AuthProvider>
         </CartProvider>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NCBVWZVDT0"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-NCBVWZVDT0');
+          `}
+        </Script>
       </body>
     </html>
   );
