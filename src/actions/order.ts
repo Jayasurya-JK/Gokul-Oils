@@ -6,6 +6,15 @@ import { razorpay } from "@/lib/razorpay";
 
 const OUT_OF_STOCK_MESSAGE = "Sorry, this product is currently out of stock. Please check back later.";
 
+export async function checkCartStock(lineItems: WooOrderPayload['line_items']) {
+    try {
+        return { outOfStock: await getOutOfStockItemNames(lineItems) };
+    } catch (error) {
+        console.error("Stock check failed:", error);
+        return { outOfStock: [] as string[] };
+    }
+}
+
 export async function placeOrder(orderData: WooOrderPayload) {
     try {
         const outOfStock = await getOutOfStockItemNames(orderData.line_items);

@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { placeOrder } from '@/actions/order';
+import { placeOrder, initiateRazorpayOrder, checkCartStock } from '@/actions/order';
 import { Loader2, User, Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { WooOrderPayload } from '@/types/woocommerce';
@@ -30,6 +30,20 @@ export default function CheckoutForm() {
     const [couponCode, setCouponCode] = useState('');
     const [couponDiscount, setCouponDiscount] = useState(0);
     const [couponMessage, setCouponMessage] = useState('');
+    const [outOfStockItems, setOutOfStockItems] = useState<string[]>([]);
+
+    // Check live stock for everything in the cart, so out-of-stock items can't reach payment
+    useEffect(() => {
+        if (cart.length === 0) {
+            setOutOfStockItems([]);
+            return;
+        }
+        checkCartStock(cart.map(item => ({
+            product_id: item.parentId || item.id,
+            variation_id: item.parentId ? item.id : undefined,
+            quantity: item.quantity,
+        }))).then(result => setOutOfStockItems(result.outOfStock));
+    }, [cart]);
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -174,7 +188,6 @@ export default function CheckoutForm() {
             };
 
 
-            const { initiateRazorpayOrder } = await import('@/actions/order');
             const result = await initiateRazorpayOrder(orderData);
 
             if (!result.success || !result.razorpayOrderId) {
@@ -317,6 +330,23 @@ export default function CheckoutForm() {
                     {/* Optional: Add View Order button if logged in */}
                 </div>
 
+            </div>
+        );
+    }
+
+    if (outOfStockItems.length > 0) {
+        return (
+            <div className="text-center py-16 px-4">
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">Sorry, currently out of stock</h2>
+                <p className="text-gray-600 mb-2">These items in your cart are not available right now:</p>
+                <p className="font-semibold text-gray-800 mb-6">{outOfStockItems.join(', ')}</p>
+                <a
+                    href="/shop"
+                    onClick={() => clearCart()}
+                    className="inline-block bg-[#1F4D3C] text-white px-6 py-3 rounded-full font-bold hover:bg-[#16382b]"
+                >
+                    Clear Cart and Go to Shop
+                </a>
             </div>
         );
     }

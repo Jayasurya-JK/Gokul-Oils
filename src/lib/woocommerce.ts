@@ -90,7 +90,12 @@ export async function getOutOfStockItemNames(lineItems: WooOrderPayload['line_it
         const response = await wooCommerceApi.get(path);
         const data = response.data;
         if (data.stock_status !== 'instock' || data.purchasable === false) {
-            names.push(data.name || `Product ${item.product_id}`);
+            if (item.variation_id) {
+                const parent = await wooCommerceApi.get(`products/${item.product_id}`);
+                names.push(`${parent.data.name} - ${data.name}`);
+            } else {
+                names.push(data.name || `Product ${item.product_id}`);
+            }
         }
     }
     return names;
