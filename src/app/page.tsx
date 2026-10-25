@@ -9,7 +9,7 @@ import About from '@/components/About';
 import ContactSection from '@/components/ContactSection';
 import { getProducts, enrichProductWithSpecificOption } from '@/lib/woocommerce';
 
-export const revalidate = 25200; // Revalidate every 7 hours
+export const revalidate = 600; // Revalidate every 10 minutes so stock changes show quickly
 
 export default async function Home() {
   const products = await getProducts().catch(err => {

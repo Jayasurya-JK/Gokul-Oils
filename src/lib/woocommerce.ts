@@ -37,8 +37,8 @@ const getProductsCached = unstable_cache(
         const response = await wooCommerceApi.get("products");
         return response.data;
     },
-    ['all-products'],
-    { revalidate: 25200 }
+    ['all-products-v2'],
+    { revalidate: 600 }
 );
 
 const getProductBySlugCached = unstable_cache(
@@ -46,8 +46,8 @@ const getProductBySlugCached = unstable_cache(
         const response = await wooCommerceApi.get("products", { slug });
         return response.data;
     },
-    ['product-by-slug'],
-    { revalidate: 25200 }
+    ['product-by-slug-v2'],
+    { revalidate: 600 }
 );
 
 const getProductVariationsCached = unstable_cache(
@@ -55,8 +55,8 @@ const getProductVariationsCached = unstable_cache(
         const response = await wooCommerceApi.get(`products/${productId}/variations`);
         return response.data;
     },
-    ['product-variations'],
-    { revalidate: 25200 }
+    ['product-variations-v2'],
+    { revalidate: 600 }
 );
 
 export async function getProducts(): Promise<WooProduct[]> {
