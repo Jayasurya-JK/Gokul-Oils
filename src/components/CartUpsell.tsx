@@ -29,7 +29,7 @@ export default function CartUpsell() {
     }, []);
 
     // Filter out items already in cart
-    const upsellItems = products.filter(p => !cart.some(item => item.id === p.id));
+    const upsellItems = products.filter(p => p.stock_status === 'instock' && !cart.some(item => item.id === p.id));
 
     const handleAdd = async (product: WooProduct) => {
         setAddingId(product.id);

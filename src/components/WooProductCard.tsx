@@ -91,6 +91,16 @@ export default function WooProductCard({ product, priority = false }: ProductCar
                 </div>
 
                 {/* Actions */}
+                {product.stock_status !== 'instock' ? (
+                    <div className="space-y-2 mt-2">
+                        <button
+                            disabled
+                            className="w-full bg-gray-200 text-gray-500 py-2.5 rounded-full font-bold flex items-center justify-center gap-2 text-sm cursor-not-allowed"
+                        >
+                            Out of Stock
+                        </button>
+                    </div>
+                ) : (
                 <div className="space-y-2 mt-2">
                     <button
                         onClick={handleAddToCart}
@@ -124,6 +134,7 @@ export default function WooProductCard({ product, priority = false }: ProductCar
                         Buy Now
                     </button>
                 </div>
+                )}
             </div>
         </div>
     );

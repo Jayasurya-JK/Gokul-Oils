@@ -47,6 +47,7 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
     const regularPrice = parseInt(activeData.regular_price || activeData.price || "0");
     const salePrice = parseInt(activeData.sale_price || activeData.price || "0");
     const isOnSale = activeData.on_sale && salePrice < regularPrice;
+    const isOutOfStock = activeData.stock_status !== 'instock' || product.stock_status === 'outofstock';
 
     // Helper to get variation Name/Label
     const getVariantLabel = (v: WooVariation) => {
@@ -231,6 +232,16 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                     </div>
 
                     {/* Buttons */}
+                    {isOutOfStock ? (
+                    <div className="flex gap-2 w-full">
+                        <button
+                            disabled
+                            className="flex-1 bg-gray-200 text-gray-500 h-10 md:h-12 rounded-md font-bold text-[10px] sm:text-sm tracking-wider uppercase cursor-not-allowed flex items-center justify-center"
+                        >
+                            Out of Stock
+                        </button>
+                    </div>
+                    ) : (
                     <div className="flex gap-2 w-full">
                         <button
                             onClick={handleAddToCart}
@@ -245,6 +256,7 @@ export default function ProductInfo({ product, variations = [] }: ProductInfoPro
                             Buy Now
                         </button>
                     </div>
+                    )}
                 </div>
 
                 {/* Icons Grid */}

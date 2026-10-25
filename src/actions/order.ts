@@ -1,11 +1,18 @@
 'use server';
 
-import { createOrder, wooCommerceApi } from "@/lib/woocommerce";
+import { createOrder, getOutOfStockItemNames } from "@/lib/woocommerce";
 import { WooOrderPayload } from "@/types/woocommerce";
 import { razorpay } from "@/lib/razorpay";
 
+const OUT_OF_STOCK_MESSAGE = "Sorry, this product is currently out of stock. Please check back later.";
+
 export async function placeOrder(orderData: WooOrderPayload) {
     try {
+        const outOfStock = await getOutOfStockItemNames(orderData.line_items);
+        if (outOfStock.length > 0) {
+            return { success: false, error: OUT_OF_STOCK_MESSAGE };
+        }
+
         const order = await createOrder(orderData);
         return { success: true, orderId: order.id, orderKey: order.order_key };
     } catch (error) {
@@ -17,6 +24,12 @@ export async function placeOrder(orderData: WooOrderPayload) {
 export async function initiateRazorpayOrder(orderData: WooOrderPayload) {
     try {
         if (!razorpay) throw new Error("Razorpay configuration missing");
+
+        // 0. Block payment for out-of-stock items before any order or charge is created
+        const outOfStock = await getOutOfStockItemNames(orderData.line_items);
+        if (outOfStock.length > 0) {
+            return { success: false, error: OUT_OF_STOCK_MESSAGE };
+        }
 
         // 1. Create WooCommerce Order (Pending)
         // Ensure set_paid is false initially

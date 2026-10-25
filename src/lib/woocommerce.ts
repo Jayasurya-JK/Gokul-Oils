@@ -79,6 +79,23 @@ export async function getProductBySlug(slug: string): Promise<WooProduct | null>
     }
 }
 
+// Reads live (uncached) stock so an order can never be placed for an out-of-stock item,
+// even if the visitor has an old cart or the product cache is stale.
+export async function getOutOfStockItemNames(lineItems: WooOrderPayload['line_items']): Promise<string[]> {
+    const names: string[] = [];
+    for (const item of lineItems) {
+        const path = item.variation_id
+            ? `products/${item.product_id}/variations/${item.variation_id}`
+            : `products/${item.product_id}`;
+        const response = await wooCommerceApi.get(path);
+        const data = response.data;
+        if (data.stock_status !== 'instock' || data.purchasable === false) {
+            names.push(data.name || `Product ${item.product_id}`);
+        }
+    }
+    return names;
+}
+
 export async function createOrder(data: WooOrderPayload): Promise<WooOrder> {
     try {
         const response = await wooCommerceApi.post("orders", data);
